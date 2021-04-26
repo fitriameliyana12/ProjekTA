@@ -1,0 +1,9 @@
+$this->form_validation->set_rules(
+			'Nama_Kategori',
+			'Nama Kategori',
+			'required|is_unique[kategori.Nama_Kategori]',
+			array(
+				'required' => 'Please fill the %s',
+				'is_unique' => 'Kategori <strong>' . $this->input->post('Nama_Kategori') . '</strong> sudah ada.'
+			)
+		);
