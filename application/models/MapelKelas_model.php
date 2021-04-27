@@ -76,7 +76,6 @@ class MapelKelas_model extends CI_Model
 	{
 		$this->db->where('id_mapel_kelas', $id);
 		$this->db->delete('mapel_kelas');
-
 	}
 
     public function editMapel($id)

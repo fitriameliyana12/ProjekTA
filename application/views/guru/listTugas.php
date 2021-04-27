@@ -1,76 +1,78 @@
+<div id="content-wrapper">
 
-    <div id="content-wrapper">
+  <div class="container-fluid">
 
-<div class="container-fluid">
-
-  <!-- Breadcrumbs-->
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="<?php echo site_url('index.php/guru/overviewGuru')?>">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">Tugas</li>
-  </ol>
-  <!-- <?php if ($this->session->userdata('level') == '1'){ ?> -->
-  <div align="left">
-    <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a>
-  </div>
-  <br>
-<!-- <?php } ?> -->
-
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="<?php echo site_url('index.php/guru/overviewGuru') ?>">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Tugas</li>
+    </ol>
+    <?php if ($this->session->userdata('level') == '2') { ?>
+      <div align="left">
+        <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a>
+      </div>
       <br>
-      <table class="table table-hover" id="myTable">
-        <thead>
-          <th>No</th>
-          <th>Judul</th>
-          <th>Kelas</th>
-          <th>Mata Pelajaran</th>
-          <th>Tanggal Upload</th>
-          <th>Deadline</th>
-          <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
-          <th>Action</th>
+    <?php } ?>
+    <br>
+    <table class="table table-hover" id="myTable">
+      <thead>
+        <th>No</th>
+        <th>Judul</th>
+        <th>Kelas</th>
+        <th>Mata Pelajaran</th>
+        <th>Tanggal Upload</th>
+        <th>Deadline</th>
+        <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
+        <th>Action</th>
         <!-- <?php } ?> -->
-        </thead>
-        <tbody id="isi_user">
-          <?php $no=1; foreach ($userList as $key) { ?>
-            <tr>
-              <td><?php echo $no; ?></td>
-              <td><?php echo $key->judul ?></td>
-              <td><?php echo $key->KodeKelas; ?></td>
-              <td><?php echo $key->KodeMapel; ?></td>
-              <td><?php echo $key->tgl_posting; ?></td>
-              <td><?php echo $key->deadline; ?></td>
+      </thead>
+      <tbody id="isi_user">
+        <?php $no = 1;
+        foreach ($tugas as $key) { ?>
+          <tr>
+            <td><?php echo $no; ?></td>
+            <td><?php echo $key->judul ?></td>
+            <td><?php echo $key->KodeKelas; ?></td>
+            <td><?php echo $key->KodeMapel; ?></td>
+            <td><?php echo $key->tgl_posting; ?></td>
+            <td><?php echo $key->deadline; ?></td>
 
-                <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
-              <td>
-                <a href="<?php echo base_url('index.php/guru/tugas/edit/');echo $key->id_tugas; ?>" class="btn btn-warning">Edit</a> 
-                <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/guru/tugas/hapus/');echo $key->id_tugas; ?>" class="btn btn-danger">Hapus</a>
-              </td>
-              <!-- <?php } ?> -->
-            </tr>
-          <?php $no++; } ?>
-        </tbody>
-      </table>
-  
-    </div>
+            <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
+            <td>
+              <a href="<?php echo base_url('index.php/guru/tugas/edit/');
+                        echo $key->id_tugas; ?>" class="btn btn-warning">Edit</a>
+              <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/guru/tugas/hapus/');
+                                                                              echo $key->id_tugas; ?>" class="btn btn-danger">Hapus</a>
+            </td>
+            <!-- <?php } ?> -->
+          </tr>
+        <?php $no++;
+        } ?>
+      </tbody>
+    </table>
+
   </div>
+</div>
 
 <!-- Logout Modal-->
 <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">×</span>
-    </button>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
+      </div>
+    </div>
   </div>
-  <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-  <div class="modal-footer">
-    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-    <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
-  </div>
-</div>
-</div>
 </div>
 
 <!-- Bootstrap core CSS-->
@@ -106,51 +108,52 @@
 <script src="<?php echo base_url('js/demo/chart-area-demo.js') ?>"></script>
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-$(document).ready( function () {
-$('#myTable').DataTable();
+  $(document).ready(function() {
+    $('#myTable').DataTable();
 
 
-$('#stok_kurang').keyup(function(){
-getBerdasarStok();
-});
+    $('#stok_kurang').keyup(function() {
+      getBerdasarStok();
+    });
 
-function getBerdasarStok() {
-var stok = $('#stok_kurang').val();
-if (!stok) {
-  $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getObatSemua/",
-        success: function(data) {
-          var obj = data;
-          $('#isi_obat').empty();
-          $.each(obj, function(index) {
-            $('#isi_obat').append('<tr><td>'+(index+1)+'</td><td>'+obj[index].nama_obat+'</td><td>'+obj[index].nama_supplier+'</td><td>'+parseInt(obj[index].stok_obat)+'</td><td>'+obj[index].kategori_obat+'</td><td>Satuan - per-satuan 1 -  Rp. '+parseInt(obj[index].harga_satuan)+' <br>Strip - per-strip '+obj[index].jumlah_strip+' - Rp. '+parseInt(+obj[index].harga_strip)+' <br>Pack - per-pack '+obj[index].jumlah_pack+' -  Rp. '+parseInt(obj[index].harga_pack)+' <br>Dos - per-dos '+obj[index].jumlah_dus+' - Rp. '+parseInt(obj[index].harga_dus)+'</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/");?>'+obj[index].kode_obat+'" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/");?>'+obj[index].kode_obat+'" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
+    function getBerdasarStok() {
+      var stok = $('#stok_kurang').val();
+      if (!stok) {
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getObatSemua/",
+          success: function(data) {
+            var obj = data;
+            $('#isi_obat').empty();
+            $.each(obj, function(index) {
+              $('#isi_obat').append('<tr><td>' + (index + 1) + '</td><td>' + obj[index].nama_obat + '</td><td>' + obj[index].nama_supplier + '</td><td>' + parseInt(obj[index].stok_obat) + '</td><td>' + obj[index].kategori_obat + '</td><td>Satuan - per-satuan 1 -  Rp. ' + parseInt(obj[index].harga_satuan) + ' <br>Strip - per-strip ' + obj[index].jumlah_strip + ' - Rp. ' + parseInt(+obj[index].harga_strip) + ' <br>Pack - per-pack ' + obj[index].jumlah_pack + ' -  Rp. ' + parseInt(obj[index].harga_pack) + ' <br>Dos - per-dos ' + obj[index].jumlah_dus + ' - Rp. ' + parseInt(obj[index].harga_dus) + '</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/"); ?>' + obj[index].kode_obat + '" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/"); ?>' + obj[index].kode_obat + '" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
 
-          })
-       }
-     });
-} else {
-  $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: {stok : stok},
-        url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getBerdasarStok/",
-        success: function(data) {
-          var obj = data;
-          $('#isi_obat').empty();
-          $.each(obj, function(index) {
-            $('#isi_obat').append('<tr><td>'+(index+1)+'</td><td>'+obj[index].nama_obat+'</td><td>'+obj[index].nama_supplier+'</td><td>'+parseInt(obj[index].stok_obat)+'</td><td>'+obj[index].kategori_obat+'</td><td>Satuan - per-satuan 1 -  Rp. '+parseInt(obj[index].harga_satuan)+' <br>Strip - per-strip '+obj[index].jumlah_strip+' - Rp. '+parseInt(+obj[index].harga_strip)+' <br>Pack - per-pack '+obj[index].jumlah_pack+' -  Rp. '+parseInt(obj[index].harga_pack)+' <br>Dos - per-dos '+obj[index].jumlah_dus+' - Rp. '+parseInt(obj[index].harga_dus)+'</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/");?>'+obj[index].kode_obat+'" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/");?>'+obj[index].kode_obat+'" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
+            })
+          }
+        });
+      } else {
+        $.ajax({
+          type: "POST",
+          dataType: "json",
+          data: {
+            stok: stok
+          },
+          url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getBerdasarStok/",
+          success: function(data) {
+            var obj = data;
+            $('#isi_obat').empty();
+            $.each(obj, function(index) {
+              $('#isi_obat').append('<tr><td>' + (index + 1) + '</td><td>' + obj[index].nama_obat + '</td><td>' + obj[index].nama_supplier + '</td><td>' + parseInt(obj[index].stok_obat) + '</td><td>' + obj[index].kategori_obat + '</td><td>Satuan - per-satuan 1 -  Rp. ' + parseInt(obj[index].harga_satuan) + ' <br>Strip - per-strip ' + obj[index].jumlah_strip + ' - Rp. ' + parseInt(+obj[index].harga_strip) + ' <br>Pack - per-pack ' + obj[index].jumlah_pack + ' -  Rp. ' + parseInt(obj[index].harga_pack) + ' <br>Dos - per-dos ' + obj[index].jumlah_dus + ' - Rp. ' + parseInt(obj[index].harga_dus) + '</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/"); ?>' + obj[index].kode_obat + '" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/"); ?>' + obj[index].kode_obat + '" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
 
-          })
-       }
-     });
+            })
+          }
+        });
 
-}
-}
+      }
+    }
 
-} );
-
+  });
 </script>
 
 

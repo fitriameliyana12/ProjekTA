@@ -42,8 +42,8 @@ class Guru_model extends CI_Model
 	public function getGuruById($id)
 	{
 		$this->db->join('user', 'guru.id_user = user.id_user', 'LEFT');
-		$this->db->where('guru.KodeGuru', $id);
-		return $this->db->get('guru')->result();
+		$this->db->where('guru.id_user', $id);
+		return $this->db->get('guru')->row();
 	}
 
 	public function editGuru($id)
