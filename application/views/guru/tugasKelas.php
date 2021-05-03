@@ -21,6 +21,7 @@
           <!-- MAP DATA-->
           <div class="map-data m-b-40">
             <h3 class="title-3 m-b-30">Tugas Kelas</h3>
+            <br>
             <div class="mx-auto d-block">
               <div class="container-fluid">
                 <?php foreach ($kelas as $k) { ?>
@@ -36,7 +37,9 @@
                               <tr>
                                 <td width="100%"><?= $m->NamaMapel ?></td>
                                 <?php if ($m->KodeGuru == $guru->KodeGuru) { ?>
-                                  <td><a href="<?= base_url() ?>guru/tugas/list/<?= $m->KodeKelas ?>/<?= $m->KodeMapel ?>/" class="btn btn-success">Tugas</a></td>
+                                  <td><a href="<?= base_url() ?>guru/tugas/list/<?= 
+                                    $m->KodeKelas ?>/<?= $m->KodeMapel ?>/" 
+                                    class="btn btn-primary">Tugas</a></td>
                                 <?php } else { ?>
                                   <td></td>
                                 <?php } ?>

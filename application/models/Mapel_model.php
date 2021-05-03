@@ -25,6 +25,11 @@ class Mapel_model extends CI_Model
 		return $this->db->get('mapel')->result();
 	}
 
+	public function getIndex($table,$where)
+    {
+        return $this->db->get_where($table,$where);
+    }
+
 	public function insertMapel()
 	{
 		$data = array(

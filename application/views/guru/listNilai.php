@@ -7,11 +7,11 @@
       <li class="breadcrumb-item">
         <a href="<?php echo site_url('index.php/guru/overviewGuru') ?>">Dashboard</a>
       </li>
-      <li class="breadcrumb-item active">Tugas</li>
+      <li class="breadcrumb-item active">Daftar Penilaian</li>
     </ol>
     <?php if ($this->session->userdata('level') == '2') { ?>
       <div align="left">
-        <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a>
+        <!-- <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a> -->
       </div>
       <br>
     <?php } ?>
@@ -19,38 +19,36 @@
     <table class="table table-hover" id="myTable">
       <thead>
         <th>No</th>
-        <th>Judul</th>
-        <th>Kelas</th>
-        <th>Mata Pelajaran</th>
-        <th>Tanggal Upload</th>
-        <th>Deadline</th>
+        <th>Nama Siswa</th>
+        <th>File</th>
+        <th>Tanggal</th>
+        <th>Nilai</th>
+        <th></th>
+        <!-- <?php if ($this->session->userdata('level') == '2') { ?> -->
         <th>Action</th>
+        <!-- <?php } ?> -->
       </thead>
       <tbody id="isi_user">
         <?php $no = 1;
-        foreach ($tugas as $key) { ?>
+        foreach ($upload as $key) { ?>
           <tr>
             <td><?php echo $no; ?></td>
-            <td><?php echo $key->judul ?></td>
-            <td><?php echo $key->KodeKelas; ?></td>
-            <td><?php echo $key->KodeMapel; ?></td>
-            <td><?php echo $key->tgl_posting; ?></td>
-            <td><?php echo $key->deadline; ?></td>
+            <td><?php echo $key->NamaSiswa ?></td>
+            <td><a href="<?= base_url('guru/downloadTugas/'.$key->file)?>"><?php echo $key->file; ?></td>
+            <td><?php echo $key->tanggal; ?></td>
             <td>
               <div class="table-data-feature">
-              <a href="<?= base_url('guru/tugas/detailTugas/').$key->id_tugas?>"class="item" data-toggle="tooltip" data-placement="top" title="Open">
-                  <i class="btn btn-info">Detail"></i>
-                </a>
-                <a href="<?= base_url('guru/tugas/editTugas/'). $key->id_tugas?>"class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                  <i class="btn btn-warning">Edit</i>
-                </a>
-                <a href="<?= base_url('guru/tugas/hapusTugas/').$key->id_tugas."/".$kodeKelas."/".$kodeMapel?>" class="item" data-toggle="tooltip" data-placement="top" title="Hapus">
-                  <i class="btn btn-danger">Hapus"></i>
-                </a>
-                <a href="<?= base_url('guru/tugas/penilaian/').$key->id_tugas."/".$kodeKelas."/".$kodeMapel?>" class="item" data-toggle="tooltip" data-placement="top" title="Penilaian Tugas">
-                  <i class="btn btn-info">Penilaian"></i>
-                </a>
-              </div>
+              <form method="post" action="<?= base_url('guru/updateNilai/'.$key->id.'/'.$id_tugas.'/'.$kodeKelas.'/'.$kodeMapel)?>">
+                <div class="row form-group">
+                    <div class="col-4">
+                        <input type="number" class="form-control" name="nilai">
+                    </div>
+                    <div class="col-3">
+                        <input type="submit" value="Submit" class="btn btn-secondary btn-sm">
+                    </div>
+                </div>
+             </form>
+             </div>
             </td>
           </tr>
         <?php $no++;

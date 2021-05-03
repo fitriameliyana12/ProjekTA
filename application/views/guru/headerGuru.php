@@ -107,7 +107,7 @@
           <span>Materi</span></a> <!--Supplier-->
       </li>
         <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/guru/absensi/'); ?>">
+        <a class="nav-link" href="<?php echo base_url('index.php/guru/absen/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
           <span>Absensi</span></a>
         </li>

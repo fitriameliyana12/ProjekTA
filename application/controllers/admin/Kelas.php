@@ -6,6 +6,15 @@ class Kelas extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('Kelas_model');
+
+        // //anti bypass
+        if ($this->session->userdata('level') == "2") {
+            redirect('/guru/overviewGuru');
+        } elseif ($this->session->userdata('level') == "3") {
+            redirect('/siswa/overviewsiswa');
+        } elseif (!$this->session->userdata('level')) {
+            redirect('/login');
+        }
 	}
 
 	public function index()

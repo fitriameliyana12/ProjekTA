@@ -19,6 +19,11 @@ class Kelas_model extends CI_Model
 		return $this->db->get('kelas')->result();
 	}
 
+	public function getIndex($table,$where)
+    {
+        return $this->db->get_where($table,$where);
+    }
+
 	public function insertKelas()
 	{
 		$data = array(

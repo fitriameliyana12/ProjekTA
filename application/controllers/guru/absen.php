@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Materi extends CI_Controller {
+class Absen extends CI_Controller {
 
     public function __construct()
     {
@@ -12,7 +12,7 @@ class Materi extends CI_Controller {
         $this->load->model('Kelas_model');
         $this->load->model('Guru_model');
         $this->load->model('Mapel_model');
-        $this->load->model('Materi_model');
+        $this->load->model('Absen_model');
 
         // //anti bypass
         if ($this->session->userdata('level') == "1") {
@@ -29,9 +29,9 @@ class Materi extends CI_Controller {
     {
         $data['kelas'] = $this->Kelas_model->getKelas();
         $data['guru'] = $this->Guru_model->getGuruById($this->session->userdata('id_User'));
-        $data['materiKelas'] = $this->MapelKelas_model->getIndex()->result();
+        $data['absenKelas'] = $this->MapelKelas_model->getIndex()->result();
         $this->load->view('guru/headerGuru', $data);
-        $this->load->view('guru/materikelas', $data);
+        $this->load->view('guru/absenkelas', $data);
         
     }
 

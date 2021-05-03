@@ -7,6 +7,14 @@ class Overview extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->model('Login_model');
 		
+		// //anti bypass
+        if ($this->session->userdata('level') == "2") {
+            redirect('/guru/overviewGuru');
+        } elseif ($this->session->userdata('level') == "3") {
+            redirect('/siswa/overviewsiswa');
+        } elseif (!$this->session->userdata('level')) {
+            redirect('/login');
+        }
 	}
 
 	public function index()

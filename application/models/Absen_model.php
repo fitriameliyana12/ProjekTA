@@ -2,7 +2,7 @@
 
 if (!defined('BASEPATH')) exit('Hacking Attempt : Get Out of the system ..!');
 
-class Tugas_model extends CI_Model
+class Absen_model extends CI_Model
 {
     public function __construct()
 

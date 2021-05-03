@@ -50,7 +50,7 @@
                 </div>
                 <div class="mr-5"></div>
               </div>
-              <a class="card-footer text-white clearfix small z-1" href="<?php echo site_url('index.php/guru/absensi')?>">
+              <a class="card-footer text-white clearfix small z-1" href="<?php echo site_url('index.php/guru/absen')?>">
                 <span class="float-left">Absensi</span>
                 <span class="float-right">
                   <i class="fas fa-angle-right"></i>

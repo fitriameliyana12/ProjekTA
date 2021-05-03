@@ -21,6 +21,7 @@
             <!-- MAP DATA-->
             <div class="map-data m-b-40">
                 <h3 class="title-3 m-b-30">Materi Kelas</h3>
+                <br>
                 <div class="mx-auto d-block">
                     <div class="container-fluid">
                     <?php foreach ($kelas as $k) { ?>
@@ -30,14 +31,14 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <tbody>
-                                    <?php foreach ($mapelKelas as $m) {
+                                    <?php foreach ($materiKelas as $m) {
                                         if ($k->KodeKelas == $m->KodeKelas) {
                                      ?>
                                         <tr>
                                             <td width="100%"><?=$m->NamaMapel?></td>
-                                            <?php if ($m->NamaMapel == $mapelKelas[0]->KodeMapel) { ?>
-                                                <td><a href="<?=base_url()?>guru/listMateri/<?=$m->KodeKelas?>/
-                                                <?= $m->KodeMapel?>/" class="btn btn-success">Materi</a></td>
+                                            <?php if ($m->KodeGuru == $guru->KodeGuru) { ?>
+                                                <td><a href="<?=base_url()?>guru/materi/listMateri/<?=$m->KodeKelas?>/
+                                                <?= $m->KodeMapel?>/" class="btn btn-primary">Materi</a></td>
                                             <?php }else{?>
                                                 <td></td>
                                             <?php }?>

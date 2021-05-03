@@ -9,13 +9,19 @@ class OverviewGuru extends CI_Controller {
 		$this->load->model('Guru_model');
         $this->load->model('Siswa_model');
 
-
-		//$data['editguru'] = $this->Guru_model->editGuru();
+		// //anti bypass
+        if ($this->session->userdata('level') == "1") {
+            redirect('/admin/overview');
+        } elseif ($this->session->userdata('level') == "3") {
+            redirect('/siswa/overviewsiswa');
+        } elseif (!$this->session->userdata('level')) {
+            redirect('/login');
+        }
 	}
 
 	public function index()
 	{
-		// $data['obatmenipis'] = $this->obat_model->getObatMenipis();
+
         if($this->session->userdata('isLogin') == FALSE)
 
 		{
@@ -32,7 +38,7 @@ class OverviewGuru extends CI_Controller {
 
 			$data['level'] = $this->session->userdata('level');
 
-			//$data['user'] = $this->m_login->userData($user);
+			
 
 			$this->load->view('guru/headerGuru', $data);
 			$this->load->view('guru/overviewGuru', $data);

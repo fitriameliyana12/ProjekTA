@@ -6,6 +6,15 @@ class User extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('User_model');
+
+		// //anti bypass
+        if ($this->session->userdata('level') == "2") {
+            redirect('/guru/overviewGuru');
+        } elseif ($this->session->userdata('level') == "3") {
+            redirect('/siswa/overviewsiswa');
+        } elseif (!$this->session->userdata('level')) {
+            redirect('/login');
+        }
     }
     public function index()
 	{

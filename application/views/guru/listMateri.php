@@ -6,50 +6,58 @@
   <!-- Breadcrumbs-->
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
-      <a href="<?php echo site_url('index.php/admin/overview')?>">Dashboard</a>
+      <a href="<?php echo site_url('index.php/guru/overviewGuru')?>">Dashboard</a>
     </li>
-    <li class="breadcrumb-item active">User</li>
+    <li class="breadcrumb-item active">Materi</li>
   </ol>
-  <!-- <?php if ($this->session->userdata('level') == '1'){ ?> -->
+  <?php if ($this->session->userdata('level') == '2'){ ?>
   <div align="left">
-    <a href="<?php echo base_url('index.php/admin/user/tambah/'); ?>" class="btn btn-success">Tambah</a>
+    <a href="<?php echo base_url('index.php/guru/materi/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
-<!-- <?php } ?> -->
+<?php } ?>
 
       <br>
       <table class="table table-hover" id="myTable">
         <thead>
           <th>No</th>
-          <th>ID User</th>
-          <th>Nama Admin</th>
-          <th>Username</th>
-          <th>Password</th>
-          <th>Level</th>
+          <th>Judul</th>
+          <th>Kelas</th>
+          <th>Mata Pelajaran</th>
+          <th>Tanggal Upload</th>
+          <th></th>
           <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
           <th>Action</th>
         <!-- <?php } ?> -->
         </thead>
         <tbody id="isi_user">
-          <?php $no=1; foreach ($userList as $key) { ?>
+          <?php $no=1; foreach ($materi as $key) { ?>
             <tr>
               <td><?php echo $no; ?></td>
-              <td><?php echo $key->id_user ?></td>
-              <td><?php echo $key->nama; ?></td>
-              <td><?php echo $key->username; ?></td>
-              <td><?php echo $key->password; ?></td>
-              <td><?php echo $key->level; ?></td>
-
-                <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
+              <td><?php echo $key->judul ?></td>
+              <td><?php echo $key->KodeKelas; ?></td>
+              <td><?php echo $key->KodeMapel; ?></td>
+              <td><?php echo $key->tgl_posting; ?></td>
               <td>
-                <a href="<?php echo base_url('index.php/admin/user/edit/');echo $key->id_user; ?>" class="btn btn-warning">Edit</a> <?php if($key->level != '1') { ?> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/user/hapus/');echo $key->id_user; ?>" class="btn btn-danger">Hapus</a>
-              <?php } ?>
-              </td>
-              <!-- <?php } ?> -->
+              <td>
+              <div class="table-data-feature">
+              <a href="<?= base_url('guru/materi/detailMateri/').$key->id_materi?>"class="item" data-toggle="tooltip" data-placement="top" title="Open">
+                  <i class="btn btn-info">Detail"></i>
+                </a>
+                <a href="<?= base_url('guru/materi/editMateri/'). $key->id_materi?>"class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                  <i class="btn btn-warning">Edit</i>
+                </a>
+                <a href="<?= base_url('guru/materi/hapusMateri/').$key->id_materi."/".$kodeKelas."/".$kodeMapel?>" class="item" data-toggle="tooltip" data-placement="top" title="Hapus">
+                  <i class="btn btn-danger">Hapus"></i>
+                </a>
+              </div>
+            </td>
             </tr>
-          <?php $no++; } ?>
-        </tbody>
-      </table>
+        <?php $no++;
+        } ?>
+      </tbody>
+    </table>
+
   
     </div>
   </div>
