@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Pengumuman</li>
   </ol>
 
-  <h1>Edit Pengumuman</h1>
+  <center><h2>Edit Pengumuman</h2></center><br>
   <?php 
   echo form_open('index.php/admin/pengumuman/edit/'.$this->uri->segment(4)); 
   echo validation_errors();
@@ -19,7 +19,7 @@
 
   <div class="form-group">
   <label>Judul Pengumuman<font color="red">*</font></label>
-  <input type="text" class="form-control" id="JudulPengumuman" name="JudulPengumuman" placeholder="Judul Pengumuman" value="<?php echo $pengumuman[0]->JudulPengumuman ?>">
+  <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul Pengumuman" value="<?php echo $pengumuman[0]->judul ?>">
   </div>
   <div class="form-group">
   <label for="textarea-input">Isi<font color="red">*</font></label>
@@ -27,35 +27,8 @@
   </div>
   <div class="form-group">
     <label>Tanggal Pengumuman<font color="red">*</font></label>
-    <input type="text" class="form-control" id="TglPengumuman" name="TglPengumuman" placeholder="Tanggal Pengumuman" readonly value="<?php echo $pengumuman[0]->TglPengumuman ?>">
+    <input type="text" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Pengumuman" readonly value="<?php echo $pengumuman[0]->tanggal ?>">
   </div>
-  <div class="form-group">
-    <div class="col col-md-3">
-    <label class="form-control-label">Tampil Guru<font color="red">*</font></label></div>
-    <div class="col col-md-9">
-        <div class="form-check-inline form-check">
-        <label for="inline-radio1" class="form-check-label">
-            <input <?php if ($pengumuman[0]->TampilGuru == 1) {?> checked <?php }?> type="radio" id="TampilGurutrue" name="TampilGuru" value="1" class="form-check-input"> Ya 
-        </label>
-        <label for="inline-radio2" class="form-check-label">
-            <input <?php if ($pengumuman[0]->TampilGuru == 0) {?> checked <?php }?> type="radio" id="TampilGurufalse" name="TampilGuru" value="0" class="form-check-input"> Tidak 
-        </label>
-        </div>
-  </div>
-  <div class="form-group">
-    <div class="col col-md-3">
-    <label class="form-control-label">Tampil Siswa<font color="red">*</font></label></div>
-    <div class="col col-md-9">
-        <div class="form-check-inline form-check">
-        <label for="inline-radio1" class="form-check-label">
-            <input <?php if ($pengumuman[0]->tampilSiswa == 1) {?> checked <?php }?> type="radio" id="tampilSiswatrue" name="tampilSiswa" value="1" class="form-check-input"> Ya 
-        </label>
-        <label for="inline-radio2" class="form-check-label">
-            <input <?php if ($pengumuman[0]->tampilSiswa == 0) {?> checked <?php }?> type="radio" id="tampilSiswafalse" name="tampilSiswa" value="0" class="form-check-input"> Tidak 
-        </label>
-        </div>
-  </div>
-
   <font color="red"><i>* Wajib diisi</i></font>
   <br>
   <br>

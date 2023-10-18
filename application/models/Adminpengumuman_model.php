@@ -12,90 +12,46 @@
 
         }
 
-    // public function getPengumuman()
-	// {
-	//     return $this->db->get('pengumuman')->result();
-	// }
+    public function getPengumuman()
+    {
+        return $this->db->get('pengumuman')->result();
+    }
 
-	// public function insertPengumuman()
-	// {
-	// 	$data = array(
-	// 		'judulPengumuman' => $this->input->post('judulPengumuman'), 
-	// 		'TglPengumuman' => $this->input->post('TglPengumuman'),
-	// 		'isi' => $this->input->post('isi'),
-	// 		'tampilSiswa' => $this->input->post('tampilSiswa'),
-    //         'TampilGuru' => $this->input->post('TampilGuru'),
-    //         // 'KodeGuru' =>$this->input->post('KodeGuru')
-	// 		);
+    public function insertPengumuman()
+    {
+        $data = array(
+            'IdPengumuman' => $this->input->post('IdPengumuman'), 
+            'judul' => $this->input->post('judul'),
+            'isi' => $this->input->post('isi'),
+            'tanggal' => $this->input->post('tanggal'),
+            );
 
-	// 	$this->db->insert('pengumuman', $data);
+        $this->db->insert('pengumuman', $data);
 
-	// }
-	// public function getPengumumanById($id)
-	// {
-	// 	$this->db->where('id', $id);
-	// 	return $this->db->get('pengumuman')->result();
-	// }
+    }
+    public function getPengumumanById($id)
+    {
+        $this->db->where('IdPengumuman', $id);
+        return $this->db->get('pengumuman')->result();
+    }
 
-	// public function editPengumuman($id)
-	// {
-	// 	$data = array(
-	// 		'judulPengumuman' => $this->input->post('judulPengumuman'), 
-	// 		'TglPengumuman' => $this->input->post('TglPengumuman'),
-	// 		'isi' => $this->input->post('isi'),
-	// 		'tampilSiswa' => $this->input->post('tampilSiswa'),
-    //         'TampilGuru' => $this->input->post('TampilGuru'),
-    //         // 'KodeGuru' =>$this->input->post('KodeGuru')
-	// 		);
+    public function editPengumuman($id)
+    {
+        $data = array(
+            'IdPengumuman' => $this->input->post('IdPengumuman'), 
+            'judul' => $this->input->post('judul'),
+            'isi' => $this->input->post('isi'),
+            'tanggal' => $this->input->post('tanggal'),
+            );
 
-	// 	$this->db->where('id', $id);
-	// 	$this->db->update('pengumuman', $data);
-	// }
+        $this->db->where('IdPengumuman', $id);
+        $this->db->update('pengumuman', $data);
+    }
 
-	// public function hapusPengumuman($id)
-	// {
-	// 	$this->db->where('id', $id);
-	// 	$this->db->delete('pengumuman');	
-	// }
-
-        public function getPengumuman()
-        {
-            return $this->db->get('pengumuman');
-        }
-
-        public function getPengumumanSiswa()
-        {
-            $this->db->where('tampilSiswa', '1');
-            return $this->db->get('pengumuman');
-        }
-
-        public function getPengumumanGuru()
-        {
-            $this->db->where('TampilGuru', '1');
-            return $this->db->get('pengumuman');
-        }
-
-        public function getDetailPengumuman($id)
-        {
-            $this->db->where('IdPengumuman', $id);
-            return $this->db->get('pengumuman');        
-        }
-
-        public function TambahPengumuman($data)
-        {
-            $this->db->insert('pengumuman', $data);    
-        }
-
-        public function updatePengumuman($data,$id)
-        {
-            $this->db->where('IdPengumuman', $id);
-            $this->db->update('pengumuman', $data);
-        }
-
-        public function hapusPengumuman($id)
-        {
-            $this->db->where('IdPengumuman', $id);
-            $this->db->delete('pengumuman');
-        }
+    public function hapusPengumuman($id)
+    {
+        $this->db->where('IdPengumuman', $id);
+        $this->db->delete('pengumuman');    
+    }
     }
 ?>

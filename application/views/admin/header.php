@@ -61,7 +61,7 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
 
-      <li class="nav-item dropdown no-arrow">
+      <!-- <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-bell fa-fw"></i>
           <span class="badge badge-danger"></span>
@@ -69,19 +69,30 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item">Notif</a><br>
         </div>
-      </li>
+      </li> -->
       
       <li class="nav-item dropdown no-arrow mx-1">
 
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user-circle fa-fw"></i>
+          <!-- <i class="fas fa-user-circle fa-fw"></i> -->
+          <?php 
+              $idUser = $this->session->userdata('id_User');
+              $idAdmin =  $this->Admin_model->getAdminByUser($idUser);
+              $profil = $this->Admin_model->getProfileAdmin($idAdmin[0]->id_admin)->result();
+              if ($profil[0]->foto == null) { ?>
+                <img class="rounded-circle " width="40px" height="40px" src="<?= base_url('assets/images/icon/user.png') ?>" alt="Card image cap">
+              <?php } else { ?>
+                <img class="rounded-circle" width="40px" height="40px" src="<?= base_url('assets/images/user/' . $profil[0]->foto) ?>" alt="Card image cap">
+              <?php } ?>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">Profile</a>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
     </ul>
+
 
   </nav>
 
@@ -95,7 +106,17 @@
         </a>
       </li>
   
-      <?php if($this->session->userdata('level') == '1'){ ?>
+      <?php if($this->session->userdata('level') == 'Admin'){ ?>
+        <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/user/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master User</span></a> <!--Supplier-->
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/admin/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master Admin</span></a>
+        </li>
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/guru/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
@@ -107,20 +128,30 @@
           <span>Master Siswa</span></a> <!--Supplier-->
       </li>
       <!-- <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/admin/admin/'); ?>">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Master Admin</span></a>
-        </li> -->
-      <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/admin/user/'); ?>">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Master User</span></a> <!--Supplier-->
-      </li>
-      <!-- <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/jurusan/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
           <span>Master Jurusan</span></a> <!--Supplier
       </li> --> 
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/kelas/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master Kelas</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/pertemuan/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master Pertemuan</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/pertemuanKelas/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master Pertemuan Kelas</span></a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/admin/Jam_pelajaran/'); ?>">
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Master Jam Pelajaran</span></a>
+        </li>
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/mapel/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
@@ -131,21 +162,17 @@
           <i class="fas fa-fw fa-folder"></i>
           <span>Master MaPel Kelas</span></a>
         </li>
-        <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/admin/kelas/'); ?>">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Master Kelas</span></a>
-        </li>
+
         <!-- <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/kelasSiswa/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
           <span>Manajemen Kelas Siswa</span></a>
         </li> -->
-        <li class="nav-item">
+        <!-- <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/jadwal/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
           <span>Master Jadwal Pelajaran</span></a>
-        </li>
+        </li> -->
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/pengumuman/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
@@ -159,7 +186,7 @@
       </li>
 
       <?php } ?>
-      <?php if($this->session->userdata('level') == '1'){ ?>
+      <?php if($this->session->userdata('level') == 'Admin'){ ?>
       <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/penjualan/listPenjualan/'); ?>">
           <i class="fas fa-fw fa-chart-area"></i>
@@ -167,7 +194,7 @@
       </li>
       <?php } ?> -->
       
-      <?php if($this->session->userdata('level') == '2'){ ?>
+      <?php if($this->session->userdata('level') == 'Guru'){ ?>
         
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/tugas/'); ?>">
@@ -180,17 +207,17 @@
           <span>Upload Materi</span></a>
       </li>
       <?php } ?>
-      <?php if($this->session->userdata('level') == '3'){ ?>
+      <?php if($this->session->userdata('level') == 'Siswa'){ ?>
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/laporan/'); ?>">
           <i class="fas fa-fw fa-table"></i>
           <span>Laporan</span></a>
       </li>
-       <li class="nav-item">
+       <!-- <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/admin/laporan/lihatGrafik/'); ?>">
           <i class="fas fa-fw fa-table"></i>
           <span>Grafik</span></a>
-      </li>
+      </li> -->
       <?php } ?>
       
      <!--  <li class="nav-item">
@@ -206,3 +233,43 @@
         </a>
       </li>
     </ul>
+
+ <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Profile Modal-->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Edit Profile Photo?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Edit" below if you want to edit the profile photo.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="<?php echo site_url('admin/profile/profile'); ?>">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+ 

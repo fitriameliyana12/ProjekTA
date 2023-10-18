@@ -11,19 +11,19 @@
     <li class="breadcrumb-item active">Kelas</li>
   </ol>
 
-  <h1>Edit Data Kelas</h1>
+  <center><h2>Edit Data Kelas</h1></center><br>
   <?php 
-  echo form_open_multipart('index.php/admin/kelas/edit/'.$this->uri->segment(4)); 
+  echo form_open('index.php/admin/kelas/edit/'.$this->uri->segment(4)); 
   echo validation_errors();
   ?>
 
   <div class="form-group">
   <label>Kode Kelas<font color="red">*</font></label>
-  <input type="text" class="form-control" id="KodeKelas" name="KodeKelas" value="<?php echo $kelas[0]->KodeKelas ?>">
+  <input type="text" class="form-control" id="KodeKelas" name="KodeKelas" value="<?php echo $kelas->KodeKelas ?>">
   </div>
   <div class="form-group">
   <label>Kelas<font color="red">*</font></label>
-  <input type="text" class="form-control" id="NamaKelas" name="NamaKelas"  value="<?php echo $kelas[0]->NamaKelas ?>">
+  <input type="text" class="form-control" id="NamaKelas" name="NamaKelas"  value="<?php echo $kelas->NamaKelas ?>">
   </div>
   
   <font color="red"><i>* Wajib diisi</i></font>

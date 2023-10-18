@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Mapel Kelas Siswa</li>
   </ol>
 
-  <h1>Tambah data Mapel Kelas Siswa</h1>
+  <center><h2>Tambah Data Mapel Kelas Siswa</h2></center><br>
   <?php 
   echo form_open('index.php/admin/mapelKelas/tambah/'); 
   echo validation_errors();
@@ -21,7 +21,7 @@
         <label>Kode Mapel<font color="red">*</font></label>
         <select name="KodeMapel" class="form-control" >
         <?php foreach ($mapelList as $key) { ?>
-            <option value ="<?php echo $key->KodeMapel ?>"><?php echo $key->KodeMapel ?></option>
+            <option value ="<?php echo $key->KodeMapel ?>"><?php echo $key->NamaMapel ?></option>
         <?php } ?>
         </select>
     </div>
@@ -30,7 +30,7 @@
         <label>Kode Kelas<font color="red">*</font></label>
         <select name="KodeKelas" class="form-control" >
         <?php foreach ($kelasList as $key) { ?>
-            <option value ="<?php echo $key->KodeKelas ?>"><?php echo $key->KodeKelas ?></option>
+            <option value ="<?php echo $key->KodeKelas ?>"><?php echo $key->NamaKelas ?></option>
         <?php } ?>
         </select>
     </div>
@@ -39,10 +39,19 @@
         <label>Kode Guru<font color="red">*</font></label>
         <select name="KodeGuru" class="form-control" >
         <?php foreach ($guruList as $key) { ?>
-            <option value ="<?php echo $key->KodeGuru ?>"><?php echo $key->KodeGuru ?></option>
+            <option value ="<?php echo $key->KodeGuru ?>"><?php echo $key->NamaGuru ?></option>
         <?php } ?>
         </select>
     </div>
+
+    <!-- <div class="form-group">
+    <label>Jam Mulai<font color="red">*</font></label>
+    <input type="Time" class="form-control" id="jam_mulai" name="jam_mulai" placeholder="Jam Mulai" required>
+  </div>
+  <div class="form-group">
+    <label>Jam Selesai<font color="red">*</font></label>
+    <input type="Time" class="form-control" id="jam_selesai" name="jam_selesai" placeholder="Jam Selesai" required>
+  </div> -->
     
   
   <font color="red"><i>* Wajib diisi</i></font>

@@ -1,85 +1,68 @@
 <div id="content-wrapper">
 
-<div class="container-fluid">
+  <div class="container-fluid">
 
-  <!-- Breadcrumbs-->
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">
-      <a href="<?php echo site_url('index.php/guru/overviewGuru') ?>">Dashboard</a>
-    </li>
-    <li class="breadcrumb-item active">Guru</li>
-  </ol>
-  <?php if ($this->session->userdata('level') == '2') { ?>
-    <!-- <div align="left">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="<?php echo site_url('index.php/guru/overviewGuru') ?>">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Guru</li>
+    </ol>
+    <?php if ($this->session->userdata('level') == 'Guru') { ?>
+      <!-- <div align="left">
   <a href="<?php echo base_url('index.php/admin/guru/tambah/'); ?>" class="btn btn-success">Tambah</a>
 </div> -->
-    <br>
-  <?php } ?>
-
-<div class="main-content">
-    <div class="section__content section__content--p30">
+      <br>
+      
+    <?php } ?>
+    <center><h3><strong>Absensi Kelas</strong></h3></center>
+    <div class="main-content">
+      <div class="section__content section__content--p30">
         <div class="container-fluid">
-            <!-- MAP DATA-->
-            <div class="map-data m-b-40">
-                <h3 class="title-3 m-b-30">Absensi Kelas</h3>
-                <br>
-                <div class="mx-auto d-block">
-                    <div class="container-fluid">
-                        <?php foreach ($kelas as $key) { ?>
-                      <div class="card card-body">
-                        <h5><?=$key->NamaKelas?></h5>
-                        <hr>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tbody>
-                                    <?php foreach ($absenKelas as $a) {
-                                        if ($key->KodeKelas == $a->KodeKelas) {
-                                     ?>
-                                        <tr>
-                                            <td width="80%"><?=$a->NamaMapel?></td>
-                                            <?php if ($a->KodeGuru == $guru->KodeGuru) { ?>
-                                                <td>
-                                                    <a href="<?=base_url()?>guru/buatabsensi/<?=$a->KodeKelas?>/<?= $a->KodeMapel?>" class="btn btn-primary">Absensi</a>
-                                                    <br><br>
-                                                    <a href="<?=base_url()?>guru/historyAbsen/<?=$a->KodeKelas?>/<?= $a->KodeMapel?>" class="btn btn-success">History Absen</a>
-                                                </td>
-                                            <?php }else{?>
-                                                <td></td>
-                                            <?php }?>
-                                        </tr>
-                                    <?php } }?>
-                                    </tbody>
-                                </table>
-                            </div>
-                      </div>
-                      <?php } ?>
+          <!-- MAP DATA-->
+          <div class="map-data m-b-40">
+            <br>
+            <div class="mx-auto d-block">
+              <div class="container-fluid">
+                <?php foreach ($kelas as $key) { ?>
+                  <div class="card card-body">
+                    <h5><?= $key->NamaKelas ?></h5>
+                    <hr>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tbody>
+                          <?php foreach ($absenKelas as $a) {
+                            if ($key->KodeKelas == $a->KodeKelas) {
+                          ?>
+                              <tr>
+                                <td width="80%"><?= $a->NamaMapel ?></td>
+                                <?php if ($a->KodeGuru == $guru->KodeGuru) { ?>
+                                  <td>
+                                    <a href="<?= base_url() ?>guru/absen/buatAbsen/<?= $a->KodeKelas ?>/<?= $a->KodeMapel ?>" class="btn btn-primary">Buat Absensi</a>
+                                    <br><br>
+                                    <a href="<?= base_url() ?>guru/absen/historyAbsen/<?= $a->KodeKelas ?>/<?= $a->KodeMapel ?>" class="btn btn-success">Cek Absensi</a>
+                                  </td>
+                                <?php } else { ?>
+                                  <td></td>
+                                <?php } ?>
+                              </tr>
+                          <?php }
+                          } ?>
+                        </tbody>
+                      </table>
                     </div>
-                </div>
-                <br>
-                
+                  </div>
+                <?php } ?>
+              </div>
             </div>
-            <!-- END MAP DATA-->
-        </div>
-    </div>
-    
-</div>
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
+            <br>
+
           </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
-          </div>
+          <!-- END MAP DATA-->
         </div>
       </div>
+
     </div>
 
     <!-- Bootstrap core CSS-->

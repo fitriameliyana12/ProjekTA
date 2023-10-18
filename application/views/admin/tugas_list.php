@@ -10,7 +10,7 @@
     </li>
     <li class="breadcrumb-item active">Upload Tugas</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '2'){ ?>
+  <?php if ($this->session->userdata('level') == 'Guru'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
@@ -26,7 +26,7 @@
           <th>Id Mapel</th>
           <th>Pertemuan</th>
           <th>File</th>
-          <?php if ($this->session->userdata('level') == '2') { ?>
+          <?php if ($this->session->userdata('level') == 'Guru') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -39,7 +39,7 @@
               <td><?php echo $key->id_mapel; ?></td>
               <td><?php echo $key->Pertemuan; ?></td>
               <td><?php echo $key->file; ?></td>
-                <?php if ($this->session->userdata('level') == '2') { ?>
+                <?php if ($this->session->userdata('level') == 'Guru') { ?>
               <td>
                 <a href="<?php echo base_url('index.php/admin/tugas/edit/');echo $key->KodeKelas; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/tugas/hapus/');echo $key->KodeKelas; ?>" class="btn btn-danger">Hapus</a>
               </td>

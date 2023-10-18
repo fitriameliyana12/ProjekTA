@@ -10,10 +10,10 @@ class OverviewSiswa extends CI_Controller {
         $this->load->model('Siswa_model');
 
 		// //anti bypass
-        if ($this->session->userdata('level') == "1") {
+        if ($this->session->userdata('level') == "Admin") {
             redirect('/admin/overview');
-        } elseif ($this->session->userdata('level') == "2") {
-            redirect('/siswa/overviewGuru');
+        } elseif ($this->session->userdata('level') == "Guru") {
+            redirect('/guru/overviewGuru');
         } elseif (!$this->session->userdata('level')) {
             redirect('/login');
         }

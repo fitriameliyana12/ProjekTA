@@ -37,6 +37,19 @@ class MapelKelas_model extends CI_Model
 		");
 	}
 
+
+	public function getMapel()
+        {
+            return $this->db->query("SELECT
+            mk.id_mapel_kelas,
+            mk.KodeKelas,
+            mp.NamaMapel,
+            mk.KodeMapel
+            FROM
+            mapel_kelas AS mk
+            JOIN mapel AS mp ON mp.KodeMapel = mk.KodeMapel");
+        }
+
 	public function insertMapelKelas()
 	{
 		$data = array(
@@ -44,6 +57,8 @@ class MapelKelas_model extends CI_Model
 			'KodeMapel' => $this->input->post('KodeMapel'), 
 			'KodeKelas' => $this->input->post('KodeKelas'),
             'KodeGuru' => $this->input->post('KodeGuru'),
+			// 'jam_mulai'=> $this->input->post('jam_mulai'),
+			// 'jam_selesai' => $this->input->post('jam_selesai'),
 			);
 
 		$this->db->insert('mapel_kelas', $data);
@@ -57,6 +72,8 @@ class MapelKelas_model extends CI_Model
 			'KodeMapel' => $this->input->post('KodeMapel'), 
 			'KodeKelas' => $this->input->post('KodeKelas'),
             'KodeGuru' => $this->input->post('KodeGuru'),
+			// 'jam_mulai'=> $this->input->post('jam_mulai'),
+			// 'jam_selesai' => $this->input->post('jam_selesai'),
 			);
 
 		$this->db->where('id_mapel_kelas', $id);
@@ -83,8 +100,6 @@ class MapelKelas_model extends CI_Model
 		$data = array(
 			'KodeMapel' => $this->input->post('KodeMapel'), 
 			'NamaMapel' => $this->input->post('NamaMapel'),
-			// 'id_jurusan' => $this->input->post('id_jurusan'),
-			// 'KodeKelas' => $this->input->post('KodeKelas'),
 			);
 
 		$this->db->where('KodeMapel', $id);
@@ -93,8 +108,6 @@ class MapelKelas_model extends CI_Model
 
 	public function getMapelById($id)
 	{
-		// $this->db->join('jurusan', 'mapel.id_jurusan = jurusan.id_jurusan', 'LEFT');
-		// $this->db->join('kelas', 'mapel.KodeKelas = kelas.KodeKelas', 'LEFT');
 		$this->db->where('mapel.KodeMapel', $id);
 		return $this->db->get('mapel')->result();
 	}
@@ -136,8 +149,6 @@ class MapelKelas_model extends CI_Model
 		return $this->db->get('guru')->result();
 	}
 
-	
-
 	public function editGuru($id)
 	{
 		$data = array(
@@ -157,5 +168,10 @@ class MapelKelas_model extends CI_Model
 		$this->db->delete('guru');
 
 	}
+
+	public function getWhere($table,$where)
+    {
+        return $this->db->get_where($table,$where);
+    }
 }
 ?>

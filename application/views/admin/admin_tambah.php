@@ -17,26 +17,31 @@
     echo validation_errors();
     ?>
 
+
     <div class="form-group">
-    <label>Nama User<font color="red">*</font></label>
-    <input type="text" class="form-control" id="nama" name="nama" placeholder="Isikan Nama User" required>
+    <label>Nama Admin<font color="red">*</font></label>
+    <input type="text" class="form-control" id="NamaAdmin" name="NamaAdmin" placeholder="Isikan Nama Admin" required>
     </div>
     <div class="form-group">
-      <label>Username<font color="red">*</font></label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="Isikan Username" required>
+      <label>NIP<font color="red">*</font></label>
+      <input type="text" class="form-control" id="NIP" name="NIP" placeholder="Isikan NIP" required>
     </div>
     <div class="form-group">
-      <label>Password<font color="red">*</font></label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Isikan Password" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,100}$" required>
-    </div>
-    <div class="form-group">
-            <label>Level<font color="red">*</font></label><br>
-            <select name="level" class="form-control">
-              <option value="1">Admin</option>
-              <option value="2">Guru</option>
-              <option value="3">Siswa</option>
+            <label>Jenis Kelamin<font color="red">*</font></label><br>
+            <select name="JenisKelamin" class="form-control">
+              <option value="1">Perempuan</option>
+              <option value="2">Laki-Laki</option>
             </select>
-          </div>
+    </div>
+    <div class="form-group">
+    <label>ID User<font color="red">*</font></label><br>
+    <select name="id_user" class="form-control">
+      <?php foreach ($userList as $key) { ?>
+        <option value="<?php echo $key->id_user ?>"><?php echo $key->id_user ?></option>
+      <?php } ?>
+    </select>
+  </div>
+ 
     <font color="red"><i>* Wajib diisi</i></font>
     <br>
     <br>

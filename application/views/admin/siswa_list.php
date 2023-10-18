@@ -10,11 +10,12 @@
     </li>
     <li class="breadcrumb-item active">Siswa</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/siswa/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Siswa</strong></h3></center>
 <?php } ?>
 
       <br>
@@ -27,7 +28,8 @@
           <th>Jenis Kelamin</th>
           <th>Nama Kelas</th>
           <th>ID User</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <th>Status</th>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -41,10 +43,11 @@
               <td><?php echo $key->JenisKelamin; ?></td>
               <td><?php echo $key->NamaKelas; ?></td>
               <td><?php echo $key->id_user; ?></td>
+              <td><?php echo $key->status_m; ?></td>
       
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
               <td>
-                <a href="<?php echo base_url('index.php/admin/siswa/edit/');echo $key->no_induk; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/siswa/hapus/');echo $key->no_induk; ?>" class="btn btn-danger">Hapus</a>
+                <a href="<?php echo base_url('index.php/admin/siswa/edit/');echo $key->no_induk; ?>" class="btn btn-warning">Edit</a>
               </td>
               <?php } ?>
             </tr>

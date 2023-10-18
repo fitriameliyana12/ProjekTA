@@ -61,7 +61,7 @@
     <!-- Navbar -->
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
 
-      <li class="nav-item dropdown no-arrow">
+      <!-- <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-bell fa-fw"></i>
           <span class="badge badge-danger"></span>
@@ -69,21 +69,70 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
             <a class="dropdown-item">Notif</a><br>
         </div>
-      </li>
+      </li> -->
       
       <li class="nav-item dropdown no-arrow mx-1">
 
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-user-circle fa-fw"></i>
+          <!-- <i class="fas fa-user-circle fa-fw"></i> -->
+          <?php 
+              $idUser = $this->session->userdata('id_User');
+              $kodeGr =  $this->Guru_model->getGuruByUser($idUser);
+              $profil = $this->Guru_model->getProfileGuru($kodeGr[0]->KodeGuru)->result();
+              if ($profil[0]->foto == null) { ?>
+                <img class="rounded-circle " width="40px" height="40px" src="<?= base_url('assets/images/icon/user.png') ?>" alt="Card image cap">
+              <?php } else { ?>
+                <img class="rounded-circle" width="40px" height="40px" src="<?= base_url('assets/images/user/' . $profil[0]->foto) ?>" alt="Card image cap">
+              <?php } ?>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">Profile</a>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
       </li>
     </ul>
 
+
   </nav>
+
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Modal-->
+      <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Edit Profile Photo?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Edit" below if you want to edit the profile photo.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="<?php echo site_url('guru/profile/profile'); ?>">Edit</a>
+            </div>
+          </div>
+        </div>
+      </div>
 
   <div id="wrapper">
     <!-- Sidebar -->
@@ -95,7 +144,7 @@
         </a>
       </li>
   
-      <?php if($this->session->userdata('level') == '2'){ ?>
+      <?php if($this->session->userdata('level') == 'Guru'){ ?>
         <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url('index.php/guru/tugas/'); ?>">
           <i class="fas fa-fw fa-folder"></i>
@@ -118,7 +167,6 @@
         </li>
       </li>
       <?php } ?>
-      
     
       <li class="nav-item active">
         <a class="nav-link" href="<?php echo site_url('index.php/login/logout'); ?>">

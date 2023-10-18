@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Guru</li>
     </ol>
 
-    <h1>Tambah data Guru</h1>
+    <center><h1>Tambah data Guru</h1></center><br>
     <?php 
     echo form_open('index.php/admin/guru/tambah/'); 
     echo validation_errors();
@@ -40,10 +40,17 @@
     <label>ID User<font color="red">*</font></label><br>
     <select name="id_user" class="form-control">
       <?php foreach ($userList as $key) { ?>
-        <option value="<?php echo $key->id_user ?>"><?php echo $key->id_user ?></option>
+        <option value="<?php echo $key->id_user ?>"><?php echo $key->id_user ?> - <?= $key->nama ?></option>
       <?php } ?>
     </select>
   </div>
+  <div class="form-group">
+            <label>Status<font color="red">*</font></label><br>
+            <select name="status_m" class="form-control">
+              <option value="1">Aktif</option>
+              <option value="2">Tidak Aktif</option>
+            </select>
+    </div>
  
 
     <font color="red"><i>* Wajib diisi</i></font>

@@ -10,11 +10,12 @@
     </li>
     <li class="breadcrumb-item active">Mapel Kelas</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/mapelKelas/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Mapel Per-Kelas</strong></h3></center>
 <?php } ?>
 
       <br>
@@ -23,9 +24,14 @@
           <th>No</th>
           <th>ID Mapel Kelas</th>
           <th>Kode Mapel</th>
+          <th>Mata Pelajaran</th>
           <th>Kode Kelas</th>
+          <th>Kelas</th>
           <th>Kode Guru</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <th>Nama Guru</th>
+          <!-- <th>Jam Mulai</th>
+          <th>Jam Selesai</th> -->
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -35,10 +41,15 @@
               <td><?php echo $no; ?></td>
               <td><?php echo $key->id_mapel_kelas; ?></td>
               <td><?php echo $key->KodeMapel; ?></td>
+              <td><?php echo $key->NamaMapel; ?></td>
               <td><?php echo $key->KodeKelas; ?></td>
+              <td><?php echo $key->NamaKelas; ?></td>
               <td><?php echo $key->KodeGuru; ?></td>
+              <td><?php echo $key->NamaGuru; ?></td>
+              <!-- <td><?php echo $key->jam_mulai; ?></td>
+              <td><?php echo $key->jam_selesai; ?></td> -->
       
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
               <td>
                 <a href="<?php echo base_url('index.php/admin/mapelKelas/edit/');echo $key->id_mapel_kelas; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/mapelKelas/hapus/');echo $key->id_mapel_kelas; ?>" class="btn btn-danger">Hapus</a>
               </td>

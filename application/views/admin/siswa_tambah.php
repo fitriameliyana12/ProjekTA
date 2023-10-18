@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Siswa</li>
     </ol>
 
-    <h1>Tambah data Siswa</h1>
+    <center><h1>Tambah data Siswa</h1></center><br>
     <?php 
     echo form_open('index.php/admin/siswa/tambah/'); 
     echo validation_errors();
@@ -51,6 +51,13 @@
           <option value ="<?php echo $key->id_user ?>"><?php echo $key->id_user ?></option>
         <?php } ?>
       </select>
+    </div>
+    <div class="form-group">
+            <label>Status Siswa<font color="red">*</font></label><br>
+            <select name="status_m" class="form-control">
+              <option value="AKTIF">AKTIF</option>
+              <option value="NON-AKTIF">NON-AKTIF</option>
+            </select>
     </div>
     
     

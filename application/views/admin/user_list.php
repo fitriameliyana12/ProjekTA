@@ -10,11 +10,12 @@
     </li>
     <li class="breadcrumb-item active">User</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/user/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Akun User </strong></h3></center>
 <?php } ?>
 
       <br>
@@ -22,11 +23,12 @@
         <thead>
           <th>No</th>
           <th>ID User</th>
-          <th>Nama Admin</th>
+          <th>Nama User</th>
           <th>Username</th>
           <th>Password</th>
           <th>Level</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <th>Status</th>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -39,11 +41,12 @@
               <td><?php echo $key->username; ?></td>
               <td><?php echo $key->password; ?></td>
               <td><?php echo $key->level; ?></td>
+              <td><?php echo $key->status; ?></td>
 
-                <!-- <?php if ($this->session->userdata('level') == '1') { ?> -->
+                <!-- <?php if ($this->session->userdata('level') == 'Admin') { ?> -->
               <td>
-                <a href="<?php echo base_url('index.php/admin/user/edit/');echo $key->id_user; ?>" class="btn btn-warning">Edit</a> <?php if($key->level != '1') { ?> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/user/hapus/');echo $key->id_user; ?>" class="btn btn-danger">Hapus</a>
-              <?php } ?>
+                <a href="<?php echo base_url('index.php/admin/user/edit/');echo $key->id_user; ?>" class="btn btn-warning">Edit</a> 
+              
               </td>
               <!-- <?php } ?> -->
             </tr>

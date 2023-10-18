@@ -5,23 +5,27 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="<?php echo site_url('index.php/guru/overviewGuru') ?>">Dashboard</a>
+        <a href="<?php echo site_url('guru/overviewGuru') ?>">Dashboard</a>
       </li>
       <li class="breadcrumb-item active">Tugas</li>
     </ol>
-    <?php if ($this->session->userdata('level') == '2') { ?>
+    <?php if ($this->session->userdata('level') == 'Guru') { ?>
+      <!-- <div align="left">
+        <a href="<?php echo base_url('guru/tugas/tambah/' . $KodeKelas . '/' . $KodeMapel); ?>" class="btn btn-success">Tambah Tugas <?= $mapel[0]->NamaMapel ?> - <?= $kelas->NamaKelas ?></a>
+      </div> -->
       <div align="left">
-        <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a>
+        <a href="<?php echo base_url('guru/tugas/tambah/' . $KodePertemuan . '/' . $KodeKelas . '/' . $KodeMapel); ?>" class="btn btn-success">Tambah Tugas <?= $mapel[0]->NamaMapel ?> - <?= $kelas->NamaKelas ?></a>
       </div>
       <br>
+      <center><h3><strong>Daftar Tugas Siswa</strong></h3></center>
     <?php } ?>
     <br>
     <table class="table table-hover" id="myTable">
       <thead>
         <th>No</th>
         <th>Judul</th>
-        <th>Kelas</th>
-        <th>Mata Pelajaran</th>
+        <!-- <th>Kelas</th>
+        <th>Mapel</th> -->
         <th>Tanggal Upload</th>
         <th>Deadline</th>
         <th>Action</th>
@@ -32,23 +36,23 @@
           <tr>
             <td><?php echo $no; ?></td>
             <td><?php echo $key->judul ?></td>
-            <td><?php echo $key->KodeKelas; ?></td>
-            <td><?php echo $key->KodeMapel; ?></td>
+            <!-- <td><?php echo $key->KodeKelas; ?></td>
+            <td><?php echo $key->KodeMapel; ?></td> -->
             <td><?php echo $key->tgl_posting; ?></td>
             <td><?php echo $key->deadline; ?></td>
             <td>
               <div class="table-data-feature">
-              <a href="<?= base_url('guru/tugas/detailTugas/').$key->id_tugas?>"class="item" data-toggle="tooltip" data-placement="top" title="Open">
-                  <i class="btn btn-info">Detail"></i>
+                <a href="<?= base_url('guru/tugas/detailTugas/') . $key->id_tugas . '/' . $KodePertemuan ?>" class="item" data-toggle="tooltip" data-placement="top" title="Open">
+                  <i class="btn btn-info">Detail</i>
                 </a>
-                <a href="<?= base_url('guru/tugas/editTugas/'). $key->id_tugas?>"class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                <a href="<?= base_url('guru/tugas/editTugas/') . $key->id_tugas . '/' . $KodePertemuan ?>" class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                   <i class="btn btn-warning">Edit</i>
                 </a>
-                <a href="<?= base_url('guru/tugas/hapusTugas/').$key->id_tugas."/".$kodeKelas."/".$kodeMapel?>" class="item" data-toggle="tooltip" data-placement="top" title="Hapus">
-                  <i class="btn btn-danger">Hapus"></i>
+                <a href="<?= base_url('guru/tugas/hapusTugas/') . $key->id_tugas . "/" . $KodePertemuan . "/" . $KodeKelas . "/" . $KodeMapel ?>" class="item" data-toggle="tooltip" data-placement="top" title="Hapus">
+                  <i class="btn btn-danger">Hapus</i>
                 </a>
-                <a href="<?= base_url('guru/tugas/penilaian/').$key->id_tugas."/".$kodeKelas."/".$kodeMapel?>" class="item" data-toggle="tooltip" data-placement="top" title="Penilaian Tugas">
-                  <i class="btn btn-info">Penilaian"></i>
+                <a href="<?= base_url('guru/tugas/penilaian/') . $key->id_tugas . "/" . $KodePertemuan . "/" . $KodeKelas . "/" . $KodeMapel ?>" class="item" data-toggle="tooltip" data-placement="top" title="Penilaian Tugas">
+                  <i class="btn btn-info">Penilaian</i>
                 </a>
               </div>
             </td>
@@ -58,25 +62,6 @@
       </tbody>
     </table>
 
-  </div>
-</div>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
-      </div>
-    </div>
   </div>
 </div>
 

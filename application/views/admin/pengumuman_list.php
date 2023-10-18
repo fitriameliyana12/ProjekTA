@@ -10,21 +10,22 @@
     </li>
     <li class="breadcrumb-item active">Pengumuman</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/pengumuman/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Pengumuman Siswa</strong></h3></center>
 <?php } ?>
 
       <br>
       <table class="table table-hover" id="myTable">
         <thead>
           <th>No</th>
-          <th>ID Pengumuman</td>
           <th>Judul Pengumuman</th>
+          <th>Isi Pengumuman</th>
           <th>Tanggal Pengumuman</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -32,15 +33,14 @@
           <?php $no=1; foreach ($pengumumanList as $key) { ?>
             <tr>
               <td><?php echo $no; ?></td>
-              <td><?php echo $key->IdPengumuman; ?></td>
-              <td><?php echo $key->JudulPengumuman; ?></td>
-              <td><?php echo $key->TglPengumuman; ?></td>
+              <td><?php echo $key->judul; ?></td>
+              <td><?php echo $key->isi; ?></td>
+              <td><?php echo $key->tanggal; ?></td>
 
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
               <td>
                 <a href="<?php echo base_url('index.php/admin/pengumuman/edit/');echo $key->IdPengumuman; ?>" class="btn btn-warning">Edit</a> 
                 <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/pengumuman/hapus/');echo $key->IdPengumuman; ?>" class="btn btn-danger">Hapus</a>
-                <a href="<?php echo base_url('index.php/admin/pengumuman/TampilPengumuman/');echo $key->IdPengumuman; ?>" class="btn btn-succes">Detail</a>
               </td>
               <?php } ?>
             </tr>
@@ -105,46 +105,6 @@
 <script type="text/javascript">
 $(document).ready( function () {
 $('#myTable').DataTable();
-
-
-$('#stok_kurang').keyup(function(){
-getBerdasarStok();
-});
-
-function getBerdasarStok() {
-var stok = $('#stok_kurang').val();
-if (!stok) {
-  $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getObatSemua/",
-        success: function(data) {
-          var obj = data;
-          $('#isi_obat').empty();
-          $.each(obj, function(index) {
-            $('#isi_obat').append('<tr><td>'+(index+1)+'</td><td>'+obj[index].nama_obat+'</td><td>'+obj[index].nama_supplier+'</td><td>'+parseInt(obj[index].stok_obat)+'</td><td>'+obj[index].kategori_obat+'</td><td>Satuan - per-satuan 1 -  Rp. '+parseInt(obj[index].harga_satuan)+' <br>Strip - per-strip '+obj[index].jumlah_strip+' - Rp. '+parseInt(+obj[index].harga_strip)+' <br>Pack - per-pack '+obj[index].jumlah_pack+' -  Rp. '+parseInt(obj[index].harga_pack)+' <br>Dos - per-dos '+obj[index].jumlah_dus+' - Rp. '+parseInt(obj[index].harga_dus)+'</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/");?>'+obj[index].kode_obat+'" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/");?>'+obj[index].kode_obat+'" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
-
-          })
-       }
-     });
-} else {
-  $.ajax({
-        type: "POST",
-        dataType: "json",
-        data: {stok : stok},
-        url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getBerdasarStok/",
-        success: function(data) {
-          var obj = data;
-          $('#isi_obat').empty();
-          $.each(obj, function(index) {
-            $('#isi_obat').append('<tr><td>'+(index+1)+'</td><td>'+obj[index].nama_obat+'</td><td>'+obj[index].nama_supplier+'</td><td>'+parseInt(obj[index].stok_obat)+'</td><td>'+obj[index].kategori_obat+'</td><td>Satuan - per-satuan 1 -  Rp. '+parseInt(obj[index].harga_satuan)+' <br>Strip - per-strip '+obj[index].jumlah_strip+' - Rp. '+parseInt(+obj[index].harga_strip)+' <br>Pack - per-pack '+obj[index].jumlah_pack+' -  Rp. '+parseInt(obj[index].harga_pack)+' <br>Dos - per-dos '+obj[index].jumlah_dus+' - Rp. '+parseInt(obj[index].harga_dus)+'</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/");?>'+obj[index].kode_obat+'" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/");?>'+obj[index].kode_obat+'" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
-
-          })
-       }
-     });
-
-}
-}
 
 } );
 

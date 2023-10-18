@@ -9,11 +9,12 @@
       </li>
       <li class="breadcrumb-item active">Daftar Penilaian</li>
     </ol>
-    <?php if ($this->session->userdata('level') == '2') { ?>
-      <div align="left">
-        <!-- <a href="<?php echo base_url('index.php/guru/tugas/tambah/'); ?>" class="btn btn-success">Tambah</a> -->
-      </div>
-      <br>
+    <?php if ($this->session->userdata('level') == 'Guru') { ?>
+    <!-- <a href="<?php echo base_url('index.php/guru/Tugas/excel/').$id_tugas; ?>" class="btn btn-success">EXPORT EXCEL</a>
+    <a href="<?php echo base_url('index.php/guru/Tugas/pdf/').$id_tugas; ?>" class="btn btn-primary">EXPORT PDF</a>
+    <a href="<?php echo base_url('index.php/guru/Tugas/print/').$id_tugas; ?>" class="btn btn-warning"> PRINT DATA</a><br>
+      <br> -->
+      <center><h3><strong>Daftar Penilaian Tugas Siswa</strong></h3></center>
     <?php } ?>
     <br>
     <table class="table table-hover" id="myTable">
@@ -23,10 +24,6 @@
         <th>File</th>
         <th>Tanggal</th>
         <th>Nilai</th>
-        <th></th>
-        <!-- <?php if ($this->session->userdata('level') == '2') { ?> -->
-        <th>Action</th>
-        <!-- <?php } ?> -->
       </thead>
       <tbody id="isi_user">
         <?php $no = 1;
@@ -34,21 +31,22 @@
           <tr>
             <td><?php echo $no; ?></td>
             <td><?php echo $key->NamaSiswa ?></td>
-            <td><a href="<?= base_url('guru/downloadTugas/'.$key->file)?>"><?php echo $key->file; ?></td>
+            <td><a href="<?= base_url('guru/tugas/downloadTugas/' . $key->file) ?>"><?php echo $key->file; ?></td>
             <td><?php echo $key->tanggal; ?></td>
             <td>
               <div class="table-data-feature">
-              <form method="post" action="<?= base_url('guru/updateNilai/'.$key->id.'/'.$id_tugas.'/'.$kodeKelas.'/'.$kodeMapel)?>">
-                <div class="row form-group">
+                <form method="post" action="<?= base_url('guru/tugas/updateNilai/' . $key->id_tugas_pengumpulan . 
+                '/' . $id_tugas . '/' . $KodePertemuan . '/' . $KodeKelas . '/' . $KodeMapel) ?>">
+                  <div class="row form-group">
                     <div class="col-4">
-                        <input type="number" class="form-control" name="nilai">
+                      <input type="number" class="form-control" name="nilai" value="<?= $key->nilai ?>">
                     </div>
                     <div class="col-3">
-                        <input type="submit" value="Submit" class="btn btn-secondary btn-sm">
+                      <input type="submit" value="Submit" class="btn btn-secondary btn-sm">
                     </div>
-                </div>
-             </form>
-             </div>
+                  </div>
+                </form>
+              </div>
             </td>
           </tr>
         <?php $no++;
@@ -56,25 +54,6 @@
       </tbody>
     </table>
 
-  </div>
-</div>
-
-<!-- Logout Modal-->
-<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="<?php echo site_url('index.php/login/logout'); ?>">Logout</a>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -113,48 +92,6 @@
 <script type="text/javascript">
   $(document).ready(function() {
     $('#myTable').DataTable();
-
-
-    $('#stok_kurang').keyup(function() {
-      getBerdasarStok();
-    });
-
-    function getBerdasarStok() {
-      var stok = $('#stok_kurang').val();
-      if (!stok) {
-        $.ajax({
-          type: "POST",
-          dataType: "json",
-          url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getObatSemua/",
-          success: function(data) {
-            var obj = data;
-            $('#isi_obat').empty();
-            $.each(obj, function(index) {
-              $('#isi_obat').append('<tr><td>' + (index + 1) + '</td><td>' + obj[index].nama_obat + '</td><td>' + obj[index].nama_supplier + '</td><td>' + parseInt(obj[index].stok_obat) + '</td><td>' + obj[index].kategori_obat + '</td><td>Satuan - per-satuan 1 -  Rp. ' + parseInt(obj[index].harga_satuan) + ' <br>Strip - per-strip ' + obj[index].jumlah_strip + ' - Rp. ' + parseInt(+obj[index].harga_strip) + ' <br>Pack - per-pack ' + obj[index].jumlah_pack + ' -  Rp. ' + parseInt(obj[index].harga_pack) + ' <br>Dos - per-dos ' + obj[index].jumlah_dus + ' - Rp. ' + parseInt(obj[index].harga_dus) + '</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/"); ?>' + obj[index].kode_obat + '" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/"); ?>' + obj[index].kode_obat + '" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
-
-            })
-          }
-        });
-      } else {
-        $.ajax({
-          type: "POST",
-          dataType: "json",
-          data: {
-            stok: stok
-          },
-          url: "<?php echo base_url(); ?>" + "index.php/admin/obat/getBerdasarStok/",
-          success: function(data) {
-            var obj = data;
-            $('#isi_obat').empty();
-            $.each(obj, function(index) {
-              $('#isi_obat').append('<tr><td>' + (index + 1) + '</td><td>' + obj[index].nama_obat + '</td><td>' + obj[index].nama_supplier + '</td><td>' + parseInt(obj[index].stok_obat) + '</td><td>' + obj[index].kategori_obat + '</td><td>Satuan - per-satuan 1 -  Rp. ' + parseInt(obj[index].harga_satuan) + ' <br>Strip - per-strip ' + obj[index].jumlah_strip + ' - Rp. ' + parseInt(+obj[index].harga_strip) + ' <br>Pack - per-pack ' + obj[index].jumlah_pack + ' -  Rp. ' + parseInt(obj[index].harga_pack) + ' <br>Dos - per-dos ' + obj[index].jumlah_dus + ' - Rp. ' + parseInt(obj[index].harga_dus) + '</td><?php if ($this->session->userdata("level") == "1" || $this->session->userdata("level") == "2") { ?><td><a href="<?php echo base_url("index.php/admin/obat/edit/"); ?>' + obj[index].kode_obat + '" class="btn btn-warning">Edit</a> <a onclick="return confirm("Apakah yakin ingin hapus?")" href="<?php echo base_url("index.php/admin/obat/hapus/"); ?>' + obj[index].kode_obat + '" class="btn btn-danger">Hapus</a></td><?php } ?></tr>');
-
-            })
-          }
-        });
-
-      }
-    }
 
   });
 </script>

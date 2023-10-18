@@ -5,13 +5,13 @@ class Pelanggan extends CI_Controller {
     {
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->model('Obat_model');
+		$this->load->model('Guru_model');
 	}
 
 
 	public function index()
 	{
-		$data['obatList'] = $this->Obat_model->getObat();
+		$data['guruList'] = $this->Guru_model->getGuru();
 
 		$this->load->view('template/header', $data);
 		$this->load->view('template/pelanggan', $data);

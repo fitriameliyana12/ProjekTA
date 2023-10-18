@@ -1,128 +1,173 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Absen extends CI_Controller {
 
-    public function __construct()
-    {
-		parent::__construct();
-        $this->load->helper('url');
-        $this->load->model('MapelKelas_model');
-        $this->load->model('Kelas_model');
-        $this->load->model('Guru_model');
-        $this->load->model('Mapel_model');
-        $this->load->model('Absen_model');
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-        // //anti bypass
-        if ($this->session->userdata('level') == "1") {
-            redirect('/admin/overview');
-        } elseif ($this->session->userdata('level') == "3") {
-            redirect('/siswa/overviewsiswa');
-        } elseif (!$this->session->userdata('level')) {
-            redirect('/login');
-        }
-        
-	}
+class Absen extends CI_Controller
+{
 
-    public function index()
-    {
-        $data['kelas'] = $this->Kelas_model->getKelas();
-        $data['guru'] = $this->Guru_model->getGuruById($this->session->userdata('id_User'));
-        $data['absenKelas'] = $this->MapelKelas_model->getIndex()->result();
-        $this->load->view('guru/headerGuru', $data);
-        $this->load->view('guru/absenkelas', $data);
-        
+  public function __construct()
+  {
+    parent::__construct();
+    $this->load->helper('url');
+    $this->load->model('MapelKelas_model');
+    $this->load->model('Kelas_model');
+    $this->load->model('Guru_model');
+    $this->load->model('Mapel_model');
+    $this->load->model('Absen_model');
+
+    // //anti bypass
+    if ($this->session->userdata('level') == "Admin") {
+      redirect('/admin/overview');
+    } elseif ($this->session->userdata('level') == "Siswa") {
+      redirect('/siswa/overviewsiswa');
+    } elseif (!$this->session->userdata('level')) {
+      redirect('/login');
+    }
+  }
+
+  public function index()
+  {
+    $data['kelas'] = $this->Kelas_model->getKelas();
+    $data['guru'] = $this->Guru_model->getGuruId($this->session->userdata('id_User'));
+    $data['absenKelas'] = $this->MapelKelas_model->getIndex()->result();
+    $this->load->view('guru/headerGuru', $data);
+    $this->load->view('guru/absenkelas', $data);
+  }
+
+  public function buatAbsen($kelas, $mapel)
+  {
+    $data['KodeKelas'] = $kelas;
+    $data['KodeMapel'] = $mapel;
+    // $data['jam'] = $id;
+    // $data['Jam_pelajaran'] = $this->Jam_pelajaran_model->getIndex('jam_pelajaran', array('id'=> $id))-result();
+    $data['kelas'] = $this->Kelas_model->getKelasById($kelas);
+    $data['mapel'] = $this->Mapel_model->getIndex('mapel', array('KodeMapel' => $mapel))->result();
+    $this->load->view('guru/headerGuru', $data);
+    $this->load->view('guru/buatAbsenKelas', $data);
+  }
+
+  public function aturAbsen()
+  {
+    $KodeKelas = $this->input->post('KodeKelas');
+    $KodeMapel = $this->input->post('KodeMapel');
+    $tanggal = $this->input->post('tanggal');
+    $jam_mulai = $this->input->post('jam_mulai');
+    $jam_selesai = $this->input->post('jam_selesai');
+    $idUser = $this->session->userdata('id_User');
+    $kodeGr =  $this->Guru_model->getGuruByUser($idUser);
+    $data = array(
+      'KodeKelas' => $KodeKelas,
+      'KodeGuru' => $kodeGr[0]->KodeGuru,
+      'KodeMapel' => $KodeMapel,
+      'tanggal' => $tanggal,
+      'jam_mulai' => $jam_mulai,
+      'jam_selesai' => $jam_selesai
+    );
+
+    $id = $this->Absen_model->insert($data, 'absen');
+
+    $kelas_siswa = $this->Absen_model->getTambah('siswa', array('KodeKelas' => $KodeKelas))->result();
+
+    foreach ($kelas_siswa as $k) {
+      $data = array('id_absen' => $id, 'no_induk' => $k->no_induk);
+      $this->Absen_model->insert($data, 'absen_siswa');
     }
 
-    public function listMateri($kodeKelas,$kodeMapel)
-    {
-        $guru = $this->Guru_model->getGuruById($this->session->userdata('id_User'));
-        $data['Kodekelas'] = $this->Kelas_model->getKelasById($kodeKelas);
-        $data['Kodemapel'] = $this->Mapel_model->getMapelById($kodeMapel);
-        $data['materi'] = $this->Materi_model->getMateriKelas($kodeKelas, $kodeMapel, $guru->KodeGuru)->result();
-        $this->load->view('guru/headerGuru', $data);
-        $this->load->view('guru/listMateri', $data);
+    redirect('guru/absen/absensi/' . $id);
+  }
+
+  public function absensi($id_absen)
+  {
+    $data['absen'] = $this->Absen_model->absenSiswa($id_absen)->result();
+    $data['kelas'] = $this->Absen_model->absenSiswaKelas($id_absen)->result();
+    $data['id_absen'] = $id_absen;
+
+    $this->load->view('guru/headerGuru', $data);
+    $this->load->view('guru/absenSiswa');
+  }
+
+  public function updateAbsenSiswa($id_absensi, $id_absen, $keterangan)
+  {
+    $data = array('keterangan' => $keterangan);
+    $where = array('id_absen_siswa' => $id_absensi);
+    $this->Absen_model->update($data, $where, 'absen_siswa');
+    redirect('guru/absen/absensi/' . $id_absen);
+  }
+  public function historyAbsen($kelas, $mapel)
+  {
+    $where = array('KodeKelas' => $kelas, 'KodeMapel' => $mapel);
+    $data['absen'] = $this->Absen_model->getTambah('absen', $where)->result();
+
+    $this->load->view('guru/headerGuru', $data);
+    $this->load->view('guru/historyAbsen');
+  }
+
+  public function print($id)
+  {
+    $data['absen'] = $this->Absen_model->absenSiswa($id)->result();
+    $data['kelas'] = $this->Absen_model->absenSiswaKelas($id)->result();
+    $this->load->view('guru/printAbsen', $data);
+  }
+
+  public function excel($id_absen)
+  {
+    $data['absen'] = $this->Absen_model->absenSiswa($id_absen)->result();
+    // $data['kelas'] = $this->Absen_model->absenSiswaKelas($id_absen)->result();
+
+    $spreadsheet = new Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setCellValue('A1', 'Hello World !');
+
+    $sheet->setTitle("Daftar Absensi Siswa");
+
+    $sheet->setCellValue('A1', 'DAFTAR ABSENSI');
+    $sheet->setCellValue('A1', 'NO');
+    $sheet->setCellValue('B1', 'NO INDUK');
+    $sheet->setCellValue('C1', 'NISN');
+    $sheet->setCellValue('D1', 'NAMA SISWA');
+    $sheet->setCellValue('E1', 'KEHADIRAN');
+
+    $baris = 2;
+    $no = 1;
+
+    foreach ($data['absen'] as $key) {
+      $sheet->setCellValue('A' . $baris, $no++);
+      $sheet->setCellValue('B' . $baris, $key->no_induk);
+      $sheet->setCellValue('C' . $baris, $key->NISN);
+      $sheet->setCellValue('D' . $baris, $key->NamaSiswa);
+      $sheet->setCellValue('E' . $baris, $key->keterangan);
+
+      $baris++;
     }
 
-    public function tambahMateri($kodeKelas, $kodeMapel)
-    {
-        $guru = $this->Guru_model->getGuruById($this->session->userdata('id_User'));
-        $data['Kodekelas'] = $this->Kelas_model->getKelasById($kodeKelas);
-        $data['Kodemapel'] = $this->Mapel_model->getMapelById($kodeMapel);
-        $data['kelas'] = $this-> Materi_model->getTambah('kelas',array('KodeKelas' => $kodeKelas))->result();
-        $data['mapel'] = $this->Materi_model->getTambah('mapel', array('KodeMapel' => $kodeMapel))->result();
-        $this->load->view('guru/headerGuru', $data);
-        $this->load->view('guru/tambahMateri', $data);
-    }
+    $writer = new Xlsx($spreadsheet);
+    $filename = 'laporan absensi-siswa';
 
-    public function prosesUploadMateri()
-    {
-        $judul = $this->input->post('judul');
-        $kodeKelas = $this->input->post('KodeKelas');
-        $kodeMapel = $this->input->post('KodeMapel');
-        $tanggal = $this->input->post('tgl_posting');
-        $content = $this->input->post('isi');
-        $todate = date('Y-m-d H:i:s', strtotime($deadline));
+    header('Content-Type: application/vnd.ms-excel');
+    header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+    header('Cache-Control: max-age=0');
+    $writer->save('php://output');
+  }
 
-        $config['upload_path']          = './assets/materi/';
-        $config['allowed_types']        = '*';
+  public function pdf($id_absen)
+  {
 
-        $this->load->library('upload', $config);
-        $upload = $this->upload->do_upload('materi');
-        if (!$upload) {
-            $data['Kodekelas'] = $kodeKelas;
-            $data['error'] = $this->upload->display_errors();
-            $data['KodeMapel'] = $kodemapel;
-            $data['kelas'] = $this->Kelas_model->getIndex('kelas', array('id_User' => $kodeKelas))->result();
-            $data['mapel'] = $this->Mapel_model->getIndex('mapel', array('id_User' => $kodeMapel))->result();
-            $this->load->view('guru/headerGuru');
-            $this->load->view('guru/tambahMateri', $data);
-        } else {
-            $upload = $this->upload->data();
-            $data = array(
-                'KodeMapel' => $kodeMapel,
-                'KodeGuru' => $this->session->userdata('id_User'),
-                'tgl_posting' => $tanggal,
-                'judul' => $judul,
-                'deadline' => $todate,
-                'info' => $content,
-                'file' => $upload['file_name'],
-                // 'aktif' => 1,
-                // 'tampil_siswa' => 1
-            );
-            $id = $this->Materi_model->insert($data, 'materi');
-            $data = array('id_materi' => $id, 'KodeKelas' => $kodeKelas);
-            $this->Materi_model->insert($data, 'materi_kelas');
-            redirect('guru/listMateri/' . $kodeKelas . '/' . $kodeMapel);
-        }
-    }
+    $this->load->library('pdf');
 
-    public function editMateri()
-    {
-        $data['materi'] = $this->Materi_model->getTambah('materi', array('id' => $id_materi));
-        $this->load->view('guru/headerGuru', $data);
-        $this->load->view('guru/editMateri', $data);
-    }
+    $data['absen'] = $this->Absen_model->absenSiswa($id_absen)->result();
+    $data['kelas'] = $this->Absen_model->absenSiswaKelas($id_absen)->result();
+    $this->load->view('guru/pdfAbsen', $data);
+    $paper_size = 'A4';
+    $orientation = 'landscape';
+    $html = $this->output->get_output();
+    $this->pdf->set_paper($paper_size, $orientation);
 
-    public function detailMateri($id_materi)
-    {
-        $data['materi'] = $this->Materi_model->getTambah('materi',array('id'=>$id_materi))->result();
-        $this->load->view('siswa/headerGuru', $data);
-        $this->load->view('siswa/detailmateri',$data);
-    }
-
-    public function hapusMateri($id,$kodeKelas,$kodeMapel)
-    {
-        $this->Materi_model->hapusMateri($id);
-        redirect("guru/listMateri/" . $kodeKelas . "/" . $kodeMapel);
-    }
-
-    public function downloadMateri($nama)
-    {
-        $pth = file_get_contents(base_url()."assets/materi/".$nama);
-        force_download($nama, $pth);
-    }
-
+    $this->pdf->load_html($html);
+    $this->pdf->render();
+    $this->pdf->stream("Data Absensi Siswa.pdf", array('Attachment' => 0));
+  }
 }
-?>

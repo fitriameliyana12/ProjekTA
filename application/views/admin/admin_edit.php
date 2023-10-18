@@ -16,33 +16,35 @@
     echo form_open('index.php/admin/admin/edit/'.$this->uri->segment(4)); 
     echo validation_errors();
     ?>
-
+   <div class="form-group">
+    <label>ID Admin<font color="red">*</font></label>
+    <input type="text" class="form-control" id="id_admin" name="id_admin" placeholder="Isikan ID Admin" value="<?php echo $admin[0]->id_admin ?>">
+    </div>
     <div class="form-group">
     <label>Nama Admin<font color="red">*</font></label>
-    <input type="text" class="form-control" id="nama" name="nama" placeholder="Isikan Nama Admin" value="<?php echo $admin[0]->nama ?>">
+    <input type="text" class="form-control" id="NamaAdmin" name="NamaAdmin" placeholder="Isikan Nama Admin" value="<?php echo $admin[0]->NamaAdmin ?>">
     </div>
     <div class="form-group">
-      <label>Username<font color="red">*</font></label>
-      <input type="text" class="form-control" id="username" name="username" placeholder="Isikan Username" value="<?php echo $admin[0]->username ?>">
+      <label>NIP<font color="red">*</font></label>
+      <input type="number" class="form-control" id="NIP" name="NIP" placeholder="Isikan NIP" value="<?php echo $admin[0]->NIP ?>">
     </div>
     <div class="form-group">
-      <label>Password<font color="red">*</font></label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Isikan Password" value="<?php echo $admin[0]->password2 ?>">
+      <label>Jenis Kelamin<font color="red">*</font></label>
+      <select name="JenisKelamin" class="form-control">
+        <option value="P" <?php if ($admin[0]->JenisKelamin == 'P') { ?> selected <?php } ?>>Peremuan</option>
+        <option value="L" <?php if ($admin[0]->JenisKelamin == 'L') { ?> selected <?php } ?>>Laki Laki</option>
+      </select>
     </div>
     <div class="form-group">
-            <label>Level<font color="red">*</font></label><br>
-            <select name="level" class="form-control">
-              <option value="1" <?php if ($admin[0]->level == 1): ?>
-                selected
-              <?php endif ?>>1</option>
-              <option value="2" <?php if ($admin[0]->level == 2): ?>
-                selected
-              <?php endif ?>>2</option>
-              <option value="3" <?php if ($admin[0]->level == 3): ?>
-                selected
-              <?php endif ?>>3</option>
-            </select>
-          </div>
+    <label>ID User<font color="red">*</font></label><br>
+    <select name="id_user" class="form-control">
+      <?php foreach ($userList as $key) { ?>
+        <option value="<?php echo $key->id_user ?>" <?php if ($admin[0]->id_user == $key->id_user) {
+          echo "selected";
+        } ?>><?php echo $key->id_user ?></option>
+      <?php } ?>
+    </select>
+  </div>
     <font color="red"><i>* Wajib diisi</i></font>
     <br>
     <br>

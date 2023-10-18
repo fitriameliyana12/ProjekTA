@@ -10,11 +10,12 @@
     </li>
     <li class="breadcrumb-item active">Kelas</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/kelas/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Kelas</strong></h3></center>
 <?php } ?>
 
       <br>
@@ -23,7 +24,7 @@
           <th>No</th>
           <th>Kode Kelas</th>
           <th>Kelas</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -33,7 +34,7 @@
               <td><?php echo $no; ?></td>
               <td><?php echo $key->KodeKelas; ?></td>
               <td><?php echo $key->NamaKelas; ?></td>
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
               <td>
                 <a href="<?php echo base_url('index.php/admin/kelas/edit/');echo $key->KodeKelas; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/kelas/hapus/');echo $key->KodeKelas; ?>" class="btn btn-danger">Hapus</a>
               </td>

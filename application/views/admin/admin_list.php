@@ -10,11 +10,13 @@
     </li>
     <li class="breadcrumb-item active">User</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
+  <?php echo $this->session->flashdata('message');  ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/admin/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
   <br>
+  <center><h3><strong>Daftar Admin</strong></h3></center>
 <?php } ?>
 
       <br>
@@ -23,9 +25,10 @@
           <th>No</th>
           <th>ID Admin</th>
           <th>Nama Admin</th>
-          <th>Password</th>
-          <th>Level</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <th>NIP</th>
+          <th>Jenis Kelamin</th>
+          <th>ID User</th>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -33,17 +36,18 @@
           <?php $no=1; foreach ($adminList as $key) { ?>
             <tr>
               <td><?php echo $no; ?></td>
-              <td><?php echo $key->nama; ?></td>
-              <td><?php echo $key->username; ?></td>
-              <td><?php echo $key->password; ?></td>
-              <td><?php echo $key->level; ?></td>
+              <td><?php echo $key->id_admin; ?></td>
+              <td><?php echo $key->NamaAdmin; ?></td>
+              <td><?php echo $key->NIP; ?></td>
+              <td><?php echo $key->JenisKelamin; ?></td>
+              <td><?php echo $key->id_user; ?></td>
 
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <!-- <?php if ($this->session->userdata('level') == 'Admin') { ?> -->
               <td>
                 <a href="<?php echo base_url('index.php/admin/admin/edit/');echo $key->id_admin; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/admin/hapus/');echo $key->id_admin; ?>" class="btn btn-danger">Hapus</a>
-          
+                  
               </td>
-              <?php } ?>
+              <!-- <?php } ?> -->
             </tr>
           <?php $no++; } ?>
         </tbody>

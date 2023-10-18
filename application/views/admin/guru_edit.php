@@ -11,7 +11,7 @@
       <li class="breadcrumb-item active">Guru</li>
     </ol>
 
-    <h1>Edit data Guru</h1>
+    <center><h1>Edit data Guru</h1></center><br>
     <?php 
     echo form_open_multipart('index.php/admin/guru/edit/'.$this->uri->segment(4)); 
     echo validation_errors();
@@ -27,7 +27,7 @@
     </div>
     <div class="form-group">
       <label>NIP<font color="red">*</font></label>
-      <input type="text" class="form-control" id="NIP" name="NIP" value="<?php echo $guru[0]->NIP ?>" name="NIP" required>
+      <input type="number" class="form-control" id="NIP" name="NIP" value="<?php echo $guru[0]->NIP ?>" name="NIP" required>
     </div>
    <div class="form-group">
       <label>Jenis Kelamin<font color="red">*</font></label>
@@ -42,10 +42,17 @@
       <?php foreach ($userList as $key) { ?>
         <option value="<?php echo $key->id_user ?>" <?php if ($guru[0]->id_user == $key->id_user) {
           echo "selected";
-        } ?>><?php echo $key->id_user ?></option>
+        } ?>><?php echo $key->id_user ?> - <?php echo $key->nama ?></option>
       <?php } ?>
     </select>
   </div>
+  <div class="form-group">
+      <label>Status Mengajar<font color="red">*</font></label>
+      <select name="status_m" class="form-control">
+        <option value="AKTIF" <?php if ($guru[0]->status_m == 'AKTIF') { ?> selected <?php } ?>>AKTIF</option>
+        <option value="TIDAK-AKTIF" <?php if ($guru[0]->status_m == 'TIDAK-AKTIF') { ?> selected <?php } ?>>TIDAK-AKTIF</option>
+      </select>
+    </div>
     
     <font color="red"><i>* Wajib diisi</i></font>
     <br>

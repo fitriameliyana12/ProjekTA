@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">User</li>
   </ol>
 
-  <h1>Tambah Data User</h1>
+  <center><h1>Tambah Akun User</h1></center><br>
   <?php 
   echo form_open('index.php/admin/user/tambah/'); 
   echo validation_errors();
@@ -32,9 +32,16 @@
   <div class="form-group">
           <label>Level<font color="red">*</font></label><br>
           <select name="level" class="form-control">
-            <option value="1">Admin</option>
-            <option value="2">Guru</option>
-            <option value="3">Siswa</option>
+            <option value="Admin">Admin</option>
+            <option value="Guru">Guru</option>
+            <option value="Siswa">Siswa</option>
+          </select>
+        </div>
+  <div class="form-group">
+          <label>Status<font color="red">*</font></label><br>
+          <select name="status" class="form-control">
+            <option value="AKTIF">AKTIF</option>
+            <option value="NON-AKTIF">NON-AKTIF</option>
           </select>
         </div>
   <font color="red"><i>* Wajib diisi</i></font>

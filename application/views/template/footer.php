@@ -3,17 +3,15 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-3">
-            <img src="<?php echo base_url(); ?>assets/logo.png" alt="Image" class="img-fluid" width="150px" height="150px">
+            <img src="<?php echo base_url(); ?>assets/sma.png" alt="Image" class="img-fluid" width="150px" height="150px">
           </div>
            <div class="col-lg-3">
               
           </div>
           <div class="col-lg-3">
-            <p>Apotek Arjasa <br>Malang<br>
-            Jl. Soekarno-Hatta No. 9 Malang 65141<br>
-            Po.Box 04 Malang<br>
-            Telepon : +62 (0341) 404424 – 404425<br>
-            Faks : +62 (0341) 404420<br></p>  
+            <p>SMAN 1 PATIANROWO <br>Nganjuk<br>
+            Glagahan, Pecuk, Kec. Patianrowo, Kab. Nganjuk, Jawa Timur 64391<br>
+            Faks : (0358) 551594 <br></p>  
           </div>
       </div>
     </div>
@@ -36,11 +34,11 @@
   <script src="<?php echo base_url(); ?>assets/assets/js/jquery.fancybox.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/assets/js/jquery.sticky.js"></script>
   <script src="<?php echo base_url(); ?>assets/assets/js/jquery.mb.YTPlayer.min.js"></script>
-
-
-
-
+  <script src="<?php echo base_url(); ?>https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="<?php echo base_url(); ?>https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script src="<?php echo base_url(); ?>assets/assets/js/main.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css"/>
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.js"></script>
 
 </body>
 

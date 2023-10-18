@@ -8,11 +8,12 @@ class Siswa extends CI_Controller {
 		$this->load->model('Siswa_model');
 		$this->load->model('Kelas_model');
 		$this->load->model('User_model');
+		$this->load->model('Admin_model');
 
 		// //anti bypass
-        if ($this->session->userdata('level') == "2") {
+        if ($this->session->userdata('level') == "Guru") {
             redirect('/guru/overviewGuru');
-        } elseif ($this->session->userdata('level') == "3") {
+        } elseif ($this->session->userdata('level') == "Siswa") {
             redirect('/siswa/overviewsiswa');
         } elseif (!$this->session->userdata('level')) {
             redirect('/login');
@@ -28,13 +29,14 @@ class Siswa extends CI_Controller {
 
 	public function tambah()
 	{
-		$this->form_validation->set_rules('no_induk', 'No Induk', 'required');
+		$this->form_validation->set_rules('no_induk', 'NoInduk', 'required');
 		$this->form_validation->set_rules('NISN', 'NISN', 'required');
     	$this->form_validation->set_rules('NamaSiswa', 'Nama Siswa', 'required');
 		$this->form_validation->set_rules('JenisKelamin', 'Jenis Kelamin', 'required');
     	$this->form_validation->set_rules('KodeKelas', 'Kode Kelas', 'required');
 		$this->form_validation->set_rules('id_user', 'ID User', 'required');
-    	
+		$this->form_validation->set_rules('status_m', 'status_m', 'required');
+
     	if ($this->form_validation->run()==FALSE) {
 
 			$data['userList'] = $this->User_model->getUser();
@@ -56,6 +58,7 @@ class Siswa extends CI_Controller {
 		$this->form_validation->set_rules('JenisKelamin', 'Jenis Kelamin', 'required');
     	$this->form_validation->set_rules('KodeKelas', 'Kode Kelas', 'required');
 		$this->form_validation->set_rules('id_user', 'ID User', 'required');
+		$this->form_validation->set_rules('status_m', 'status_m', 'required');
 
     	if ($this->form_validation->run()==FALSE) {
 

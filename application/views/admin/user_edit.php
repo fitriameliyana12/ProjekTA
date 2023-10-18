@@ -37,17 +37,29 @@
   <div class="form-group">
           <label>Level<font color="red">*</font></label><br>
           <select name="level" class="form-control">
-            <option value="1" <?php if ($user[0]->level == 1): ?>
+            <option value="Admin" <?php if ($user[0]->level == 'Admin'): ?>
               selected
             <?php endif ?>>Admin</option>
-            <option value="2" <?php if ($user[0]->level == 2): ?>
+            <option value="Guru" <?php if ($user[0]->level == 'Guru'): ?>
               selected
             <?php endif ?>>Guru</option>
-            <option value="3" <?php if ($user[0]->level == 3): ?>
+            <option value="Siswa" <?php if ($user[0]->level == 'Siswa'): ?>
               selected
             <?php endif ?>>Siswa</option>
           </select>
         </div>
+  <div class="form-group">
+    <label>Status<font color="red">*</font></label></br>
+    <select name="status" class="form-control">
+    <option value="AKTIF" <?php if ($user[0]->status == "AKTIF"): ?>
+              selected
+            <?php endif ?>>AKTIF</option>
+            <option value="NON-AKTIF" <?php if ($user[0]->status == "NON-AKTIF"): ?>
+              selected
+            <?php endif ?>>NON-AKTIF</option>
+          </select>
+        </div>
+
   <font color="red"><i>* Wajib diisi</i></font>
   <br>
   <br>

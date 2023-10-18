@@ -30,25 +30,45 @@ class Materi_model extends CI_Model
 		");
 	}
 
-	public function getMateriKelas($kelas, $mapel, $id)
+	public function getMateriKelas($kodePertemuan,$kodeKelas, $kodeMapel, $kodeGuru)
     {
         return $this->db->query('SELECT
 		mt.id_materi,
+        mt.KodePertemuan,
         mt.KodeMapel,
         mt.KodeGuru,
         mt.judul,
         mk.id_materi_kelas,
         mk.KodeKelas,
         gr.NamaGuru,
-        mt.tgl_posting,
-        FROM
-        materi AS mt
+        mt.tgl_posting
+        FROM materi AS mt
         INNER JOIN materi_kelas AS mk ON mk.id_materi = mt.id_materi
         INNER JOIN guru AS gr ON gr.KodeGuru = mt.KodeGuru
         WHERE
-        mt.KodeMapel = "' . $mapel . '" AND
-        mt.KodeGuru = "' . $id . '" AND
-        mk.KodeKelas = "' . $kelas . '"');
+        mt.KodePertemuan = "' . $kodePertemuan . '" AND
+        mt.KodeMapel = "' . $kodeMapel . '" AND
+        mt.KodeGuru = "' . $kodeGuru . '" AND
+        mk.KodeKelas = "' . $kodeKelas . '"');
+    }
+
+    public function getMateriJoinKelas($id){
+        return $this->db->query('SELECT
+		mt.id_materi,
+        mt.KodePertemuan,
+        mt.KodeMapel,
+        mt.KodeGuru,
+        mt.judul,
+        mt.isi,
+        mt.file,
+        mt.tgl_posting,
+        mk.KodeKelas
+        FROM
+        materi AS mt
+        INNER JOIN materi_kelas AS mk ON mk.id_materi = mt.id_materi
+        WHERE
+        mt.id_materi = "' . $id . '" AND
+        mk.id_materi = "' . $id . '"');
     }
 
 	public function getTambah($table,$where)
@@ -59,14 +79,27 @@ class Materi_model extends CI_Model
 	public function hapusMateri($id)
     {
         $this->db->where('id_materi', $id);
-        $this->db->delete('materi');
-
-        $this->db->where('id_materi_kelas', $id);
         $this->db->delete('materi_kelas');
+
+        $this->db->where('id_materi', $id);
+        $this->db->delete('materi');
     }
 
+	public function insertData($table, $data)
+    {
+        $this->db->insert($table, $data);
+    }
 	
-	
+    // public function updateData($table, $data)
+    // {
+    //     $this->db->update($table, $data);
+    // }
+
+    public function updateData($data,$where,$table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
 }
 
 

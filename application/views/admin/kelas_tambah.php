@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Kelas</li>
   </ol>
 
-  <h1>Tambah Data Kelas</h1>
+  <center><h2>Tambah Data Kelas</h2></center><br>
   <?php 
   echo form_open('index.php/admin/kelas/tambah/'); 
   echo validation_errors();

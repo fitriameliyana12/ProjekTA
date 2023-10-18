@@ -6,16 +6,18 @@ class User extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('User_model');
+		$this->load->model('Admin_model');
 
 		// //anti bypass
-        if ($this->session->userdata('level') == "2") {
+        if ($this->session->userdata('level') == "Guru") {
             redirect('/guru/overviewGuru');
-        } elseif ($this->session->userdata('level') == "3") {
+        } elseif ($this->session->userdata('level') == "Siswa") {
             redirect('/siswa/overviewsiswa');
         } elseif (!$this->session->userdata('level')) {
             redirect('/login');
         }
-    }
+	}
+	
     public function index()
 	{
 		$data['userList'] = $this->User_model->getUser();
@@ -29,6 +31,7 @@ class User extends CI_Controller {
     	$this->form_validation->set_rules('username', 'Username', 'required');
     	$this->form_validation->set_rules('password', 'Password', 'required');
     	$this->form_validation->set_rules('level', 'Level', 'required');
+		$this->form_validation->set_rules('status', 'status', 'required');
 
     	if ($this->form_validation->run()==FALSE) {
     		$data['userList'] = $this->User_model->getUser();
@@ -49,6 +52,7 @@ class User extends CI_Controller {
     	$this->form_validation->set_rules('username', 'Username', 'required');
     	$this->form_validation->set_rules('password', 'Password', 'required');
     	$this->form_validation->set_rules('level', 'Level', 'required');
+		$this->form_validation->set_rules('status', 'status', 'required');
 
     	$data['user']=$this->User_model->getUserById($id);
 
@@ -70,38 +74,7 @@ class User extends CI_Controller {
 		redirect('index.php/admin/user', 'refresh');
 	}
 
-	public function ubah_pass()
-	{
-		$this->form_validation->set_rules('pwlama', 'Password Lama', 'required|callback_cekPwLama');
-    	$this->form_validation->set_rules('pwbaru', 'Password Baru', 'required');
-    	$this->form_validation->set_rules('pwkonfirm', 'Konfirmasi Password', 'required|matches[pwbaru]');
-    	if ($this->form_validation->run()==FALSE) {
-    		$data['obatmenipis'] = $this->obat_model->getObatMenipis();
-    		$this->load->view('admin/header',$data);
-			$this->load->view('admin/edit_password');
-
-    	}else {
-    		$id = $this->session->userdata('id_User');
-    		$this->Admin_model->editPass($id);
-    		
-    		redirect('index.php/admin/admin', 'refresh');
-    	}
-	}
-
-
-	public function cekPwLama()
-	{
-		$id = $this->session->userdata('id_User');
-
-		$dataAdmin = $this->Admin_model->getAdminById($id);
-		// var_dump($dataAdmin[0]->password);
-		if ($dataAdmin[0]->password == md5($this->input->post('pwlama'))) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+	
 }
 
 ?>

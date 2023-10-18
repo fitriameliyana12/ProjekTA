@@ -11,19 +11,19 @@
     <li class="breadcrumb-item active">Pengumuman</li>
   </ol>
 
-  <h1>Tambah Pengumuman</h1>
+  <center><h2>Tambah Pengumuman </h2></center><br>
   <?php 
-  echo form_open('index.php/admin/pengumuman/tambah/'); 
+  echo form_open('index.php/admin/pengumuman/tambah/'.$this->uri->segment(4)); 
   echo validation_errors();
   ?>
 
+  <!-- <div class="form-group">
+  <label>Id Pengumuman<font color="red">*</font></label>
+  <input type="number" class="form-control" id="IdPengumuman" name="IdPengumuman" placeholder="ID Pengumuman" required>
+  </div> -->
   <div class="form-group">
   <label>Judul Pengumuman<font color="red">*</font></label>
-  <input type="text" class="form-control" id="JudulPengumuman" name="JudulPengumuman" placeholder="Judul Pengumuman" required>
-  </div>
-  <div class="form-group">
-    <label>Tanggal Pengumuman<font color="red">*</font></label>
-    <input type="text" class="form-control" id="TglPengumuman" name="TglPengumuman" placeholder="Tanggal Pengumuman" readonly value="<?= date('Y-m-d')?>" required>
+  <input type="text" class="form-control" id="judul" name="judul" placeholder="Judul Pengumuman" required>
   </div>
   <div class="form-group">
     <label for="textarea-input">Isi<font color="red">*</font></label><br>
@@ -31,36 +31,11 @@
         <textarea name="isi" id="isi" rows="9" placeholder="Isi Pesan..." class="form-control"></textarea>
         </div>
   </div>
-  <div class="row form-group">
-    <div class="col col-md-3">
-        <label class=" form-control-label">Tampil Guru </label>
-    </div>
-    <div class="col col-md-9">
-        <div class="form-check-inline form-check">
-            <label for="inline-radio1" class="form-check-label">
-                <input type="radio" id="TampilGuru" name="TampilGuru" value="1" class="form-check-input"> Ya 
-            </label>
-            <label for="inline-radio2" class="form-check-label">
-                <input type="radio" id="TampilGuru" name="TampilGuru" value="0" class="form-check-input"> Tidak 
-            </label>
-        </div>
-    </div>
-    </div>
-    <div class="row form-group">
-        <div class="col col-md-3">
-            <label class=" form-control-label">Tampil Siswa </label>
-        </div>
-        <div class="col col-md-9">
-            <div class="form-check-inline form-check">
-                <label for="inline-radio1" class="form-check-label">
-                    <input type="radio" id="tampilSiswa" name="tampilSiswa" value="1" class="form-check-input"> Ya 
-            </label>
-            <label for="inline-radio2" class="form-check-label">
-                    <input type="radio" id="tampilSiswa" name="tampilSiswa" value="0" class="form-check-input"> Tidak 
-            </label>
-            </div>
-        </div>
-    </div>
+  <div class="form-group">
+    <label>Tanggal Pengumuman<font color="red">*</font></label>
+    <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="Tanggal Pengumuman" readonly value="<?= date('Y-m-d')?>" required>
+  </div>
+ 
 
   <font color="red"><i>* Wajib diisi</i></font>
   <br>

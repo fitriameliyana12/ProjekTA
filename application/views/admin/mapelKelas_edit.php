@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Mapel Kelas Siswa</li>
   </ol>
 
-  <h1>Edit data Mapel Kelas Siswa</h1>
+  <center><h2>Edit Data Mapel Kelas Siswa</h2></center><br>
   <?php 
   echo form_open('index.php/admin/mapelKelas/edit/'.$this->uri->segment(4)); 
   echo validation_errors();
@@ -26,7 +26,7 @@
       <?php foreach ($mapelList as $key) { ?>
         <option value="<?php echo $key->KodeMapel ?>" <?php if ($mapelKelas[0]->KodeMapel == $key->KodeMapel) {
           echo "selected";
-        } ?>><?php echo $key->KodeMapel ?></option>
+        } ?>><?php echo $key->NamaMapel ?></option>
       <?php } ?>
     </select>
   </div>
@@ -36,7 +36,7 @@
       <?php foreach ($kelasList as $key) { ?>
         <option value="<?php echo $key->KodeKelas ?>" <?php if ($mapelKelas[0]->KodeKelas == $key->KodeKelas) {
           echo "selected";
-        } ?>><?php echo $key->KodeKelas ?></option>
+        } ?>><?php echo $key->NamaKelas ?></option>
       <?php } ?>
     </select>
   </div>
@@ -46,10 +46,18 @@
       <?php foreach ($guruList as $key) { ?>
         <option value="<?php echo $key->KodeGuru ?>" <?php if ($mapelKelas[0]->KodeGuru == $key->KodeGuru) {
           echo "selected";
-        } ?>><?php echo $key->KodeGuru ?></option>
+        } ?>><?php echo $key->NamaGuru ?></option>
       <?php } ?>
     </select>
   </div>
+  <!-- <div class="form-group">
+  <label>Jam Mulai<font color="red">*</font></label>
+  <input type="Time" class="form-control" id="jam_mulai" name="jam_mulai"  value="<?php echo $mapelKelas[0]->jam_mulai ?>">
+  </div>
+  <div class="form-group">
+  <label>Jam Selesai<font color="red">*</font></label>
+  <input type="Time" class="form-control" id="jam_selesai" name="jam_selesai"  value="<?php echo $mapelKelas[0]->jam_selesai?>">
+  </div> -->
 
   
   <font color="red"><i>* Wajib diisi</i></font>

@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Mata Pelajaran</li>
   </ol>
 
-  <h1>Edit Data Mapel</h1>
+  <center><h2>Edit Data Mata Pelajaran</h2></center><br>
   <?php 
   echo form_open_multipart('index.php/admin/mapel/edit/'.$this->uri->segment(4)); 
   echo validation_errors();

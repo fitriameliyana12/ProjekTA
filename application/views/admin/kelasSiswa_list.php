@@ -10,7 +10,7 @@
     </li>
     <li class="breadcrumb-item active">Manajemen Kelas Siswa</li>
   </ol>
-  <?php if ($this->session->userdata('level') == '1'){ ?>
+  <?php if ($this->session->userdata('level') == 'Admin'){ ?>
   <div align="left">
     <a href="<?php echo base_url('index.php/admin/kelasSiswa/tambah/'); ?>" class="btn btn-success">Tambah</a>
   </div>
@@ -24,7 +24,7 @@
           <th>ID Kelas Siswa</th>
           <th>Kode Kelas</th>
           <th>No_induk</th>
-          <?php if ($this->session->userdata('level') == '1') { ?>
+          <?php if ($this->session->userdata('level') == 'Admin') { ?>
           <th>Action</th>
         <?php } ?>
         </thead>
@@ -36,7 +36,7 @@
               <td><?php echo $key->KodeKelas; ?></td>
               <td><?php echo $key->no_induk; ?></td>
 
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
               <td>
                 <a href="<?php echo base_url('index.php/admin/kelasSiswa/edit/');echo $key->id_kelas_siswa; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/kelasSiswa/hapus/');echo $key->id_kelas_siswa; ?>" class="btn btn-danger">Hapus</a>          
               </td>

@@ -11,7 +11,7 @@
     <li class="breadcrumb-item active">Mata Pelajaran</li>
   </ol>
 
-  <h1>Tambah data Mata Pelajaran</h1>
+  <center><h2>Tambah data Mata Pelajaran</h2></center><br>
   <?php 
   echo form_open('index.php/admin/mapel/tambah/'); 
   echo validation_errors();

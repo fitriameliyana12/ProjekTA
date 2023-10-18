@@ -14,7 +14,7 @@ parent::__construct();
 
 }
 
-public function takeUser($username, $password, $level)
+public function takeUser($username, $password, $level, $status)
 
 {
 
@@ -27,6 +27,8 @@ $this->db->where('username', $username);
 $this->db->where('password', $password);
 
 $this->db->where('level', $level);
+
+$this->db->where('status', $status);
 
 $query = $this->db->get('elearningta');
 

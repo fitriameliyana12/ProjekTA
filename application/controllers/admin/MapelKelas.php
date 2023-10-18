@@ -8,16 +8,18 @@ class MapelKelas extends CI_Controller {
         $this->load->model('Mapel_model');
         $this->load->model('Kelas_model');
         $this->load->model('Guru_model');
+        $this->load->model('Admin_model');
 
-        // //anti bypass
-        if ($this->session->userdata('level') == "2") {
-            redirect('/guru/overviewGuru');
-        } elseif ($this->session->userdata('level') == "3") {
-            redirect('/siswa/overviewsiswa');
-        } elseif (!$this->session->userdata('level')) {
-            redirect('/login');
-        }
-	}
+       // //anti bypass
+       if ($this->session->userdata('level') == "Guru") {
+        redirect('/guru/overviewGuru');
+    } elseif ($this->session->userdata('level') == "Siswa") {
+        redirect('/siswa/overviewsiswa');
+    } elseif (!$this->session->userdata('level')) {
+        redirect('/login');
+    }
+}
+
 	public function index()
 	{
 		$data['mapelKelasList'] = $this->MapelKelas_model->getMapelKelas()->result();
@@ -29,7 +31,10 @@ class MapelKelas extends CI_Controller {
         // $this->form_validation->set_rules('id_mapel_kelas', 'id_Mapel_kelas', 'required');
 		$this->form_validation->set_rules('KodeMapel', 'KodeMapel', 'required');
     	$this->form_validation->set_rules('KodeKelas', 'KodeKelas', 'required');
-        $this->form_validation->set_rules('KodeGuru', 'KodeGuru', 'required');   
+        $this->form_validation->set_rules('KodeGuru', 'KodeGuru', 'required'); 
+        // $this->form_validation->set_rules('jam_mulai', 'jam_mulai', 'required');  
+        // $this->form_validation->set_rules('jam_selesai', 'jam_selesai', 'required'); 
+        
     	if ($this->form_validation->run()==FALSE) {
 
             $data['guruList'] = $this->Guru_model->getGuru();
@@ -50,6 +55,8 @@ class MapelKelas extends CI_Controller {
 		$this->form_validation->set_rules('KodeMapel', 'KodeMapel', 'required');
     	$this->form_validation->set_rules('KodeKelas', 'KodeKelas', 'required');
         $this->form_validation->set_rules('KodeGuru', 'KodeGuru', 'required');
+        // $this->form_validation->set_rules('jam_mulai', 'jam_mulai', 'required');  
+        // $this->form_validation->set_rules('jam_selesai', 'jam_selesai', 'required'); 
 
         if ($this->form_validation->run()==FALSE) {
 

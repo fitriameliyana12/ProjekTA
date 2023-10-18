@@ -29,7 +29,7 @@ class Kelas_model extends CI_Model
 		$data = array(
 			'KodeKelas' => $this->input->post('KodeKelas'), 
             'NamaKelas' => $this->input->post('NamaKelas'),
-			);
+		);
 		$this->db->insert('kelas', $data);
 
 	}
@@ -48,7 +48,7 @@ class Kelas_model extends CI_Model
     public function getKelasById($id)
 	{
 		$this->db->where('kelas.KodeKelas', $id);
-		return $this->db->get('kelas')->result();
+		return $this->db->get('kelas')->row();
 	}
 
 	public function hapusKelas($id)

@@ -6,11 +6,12 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		$this->load->helper('url');
 		$this->load->model('Admin_model');	
+		$this->load->model('User_model');
 
 		// //anti bypass
-        if ($this->session->userdata('level') == "2") {
+        if ($this->session->userdata('level') == "Guru") {
             redirect('/guru/overviewGuru');
-        } elseif ($this->session->userdata('level') == "3") {
+        } elseif ($this->session->userdata('level') == "Siswa") {
             redirect('/siswa/overviewsiswa');
         } elseif (!$this->session->userdata('level')) {
             redirect('/login');
@@ -26,17 +27,23 @@ class Admin extends CI_Controller {
 
 	public function tambah()
 	{
-		$this->form_validation->set_rules('nama', 'Nama', 'required');
-    	$this->form_validation->set_rules('username', 'Username', 'required');
-    	$this->form_validation->set_rules('password', 'Password', 'required');
-    	$this->form_validation->set_rules('level', 'Level', 'required');
-
+		// $this->form_validation->set_rules('id_admin', 'id_admin', 'required');
+    	$this->form_validation->set_rules('NamaAdmin', 'NamaAdmin', 'required');
+    	$this->form_validation->set_rules('NIP', 'NIP', 'required');
+    	$this->form_validation->set_rules('JenisKelamin', 'JenisKelamin', 'required');
+		$this->form_validation->set_rules('id_user', 'id_user', 'required');
+    	
     	if ($this->form_validation->run()==FALSE) {
+
+			$data['userList'] = $this->User_model->getUser();
     		$data['adminList'] = $this->Admin_model->getAdmin();
     		$this->load->view('admin/header',$data);
-			$this->load->view('admin/admin_tambah');
+			$this->load->view('admin/admin_tambah', $data);
     	}else {
     		$this->Admin_model->insertAdmin();
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success</strong> Data Admin Berhasil Ditambahkan. </div>');
     		redirect('index.php/admin/admin', 'refresh');
     	}
 
@@ -45,21 +52,24 @@ class Admin extends CI_Controller {
 
 	public function edit($id)
 	{
-		$this->form_validation->set_rules('nama', 'Nama Admin', 'required');
-    	$this->form_validation->set_rules('username', 'Username', 'required');
-    	$this->form_validation->set_rules('password', 'Password', 'required');
-    	$this->form_validation->set_rules('level', 'Level', 'required');
-
-    	$data['admin']=$this->Admin_model->getAdminById($id);
+		$this->form_validation->set_rules('id_admin', 'id_admin', 'required');
+    	$this->form_validation->set_rules('NamaAdmin', 'NamaAdmin', 'required');
+    	$this->form_validation->set_rules('NIP', 'NIP', 'required');
+    	$this->form_validation->set_rules('JenisKelamin', 'JenisKelamin', 'required');
+		$this->form_validation->set_rules('id_user', 'id_user', 'required');
 
     	if ($this->form_validation->run()==FALSE) {
-    		$data['adminList'] = $this->Admin_model->getAdmin();
+			
+			$data['userList'] = $this->User_model->getUser();
+    		$data['admin'] = $this->Admin_model->getAdminById($id);
     		$this->load->view('admin/header',$data);
 			$this->load->view('admin/admin_edit', $data);
 
     	}else {
     		$this->Admin_model->editAdmin($id);
-    		
+			$this->session->set_flashdata('message', '<div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success</strong> Data Admin Berhasil Diedit. </div>');
     		redirect('index.php/admin/admin', 'refresh');
     	}
 	}
@@ -67,41 +77,27 @@ class Admin extends CI_Controller {
 	public function hapus($id)
 	{
 		$this->Admin_model->hapusAdmin($id);
+		$this->session->set_flashdata('message', '<div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Success</strong> Data Admin Berhasil Dihapus. </div>');
 		redirect('index.php/admin/admin', 'refresh');
 	}
 
-	public function ubah_pass()
-	{
-		$this->form_validation->set_rules('pwlama', 'Password Lama', 'required|callback_cekPwLama');
-    	$this->form_validation->set_rules('pwbaru', 'Password Baru', 'required');
-    	$this->form_validation->set_rules('pwkonfirm', 'Konfirmasi Password', 'required|matches[pwbaru]');
-    	if ($this->form_validation->run()==FALSE) {
-    		$data['obatmenipis'] = $this->obat_model->getObatMenipis();
-    		$this->load->view('admin/header',$data);
-			$this->load->view('admin/edit_password');
+	public function getAdmin()
+    {
+        $kode = $this->input->post('id');
 
-    	}else {
-    		$id = $this->session->userdata('id_User');
-    		$this->Admin_model->editPass($id);
-    		
-    		redirect('index.php/admin/admin', 'refresh');
-    	}
-	}
+        echo json_encode($data);
 
+    }
 
-	public function cekPwLama()
-	{
-		$id = $this->session->userdata('id_User');
+    public function getAdminSemua()
+    {
+        $data = $this->Admin_model->getAdmin();
 
-		$dataAdmin = $this->Admin_model->getAdminById($id);
-		// var_dump($dataAdmin[0]->password);
-		if ($dataAdmin[0]->password == md5($this->input->post('pwlama'))) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+        echo json_encode($data);
+    }
+	
 }
 
 ?>

@@ -27,6 +27,7 @@ class User_model extends CI_Model
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
             'level' => $this->input->post('level'),
+			'status' => $this->input->post('status'),
 			);
 
 		$this->db->insert('user', $data);
@@ -46,6 +47,7 @@ class User_model extends CI_Model
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
             'level' => $this->input->post('level'),
+			'status' => $this->input->post('status'),
 			);
 
 		$this->db->where('id_user', $id);

@@ -26,6 +26,69 @@ class Siswa_model extends CI_Model
 		// return $this->db->get('siswa')->result();
 	}
 
+	public function getProfileSiswa($id)
+    {
+        $this->db->where('no_induk', $id);
+        return $this->db->get('siswa');
+    }
+	
+	public function updateImage($data,$id)
+    {
+        $this->db->where('no_induk', $id);
+        $this->db->update('siswa', $data);
+    }
+
+	public function getSiswaByUser($id)
+    {
+        $this->db->where('id_user', $id);
+        return $this->db->get('siswa')->result();
+    }
+
+	public function getUjianSiswa($id)
+	{
+		return $this->db->query('SELECT
+			uj.id_ujian,
+			uj.judul,
+			uj.tgl_buat,
+			uj.tgl_mulai,
+			uj.tgl_selesai,
+			uj.waktu,
+			uj.id_mapel_kelas,
+			mp.NamaMapel,
+			kl.NamaKelas,
+			kl.KodeKelas
+			FROM ujian as uj
+			INNER JOIN mapel_kelas AS mk ON uj.id_mapel_kelas = mk.id_mapel_kelas
+			INNER JOIN mapel AS mp ON mk.KodeMapel = mp.KodeMapel
+			INNER JOIN kelas AS kl ON mk.KodeKelas = kl.KodeKelas
+			WHERE kl.KodeKelas = "'.$id.'"
+		');
+	}
+
+	public function getmasukUjianSiswa($id)
+	{
+	return $this->db->query('SELECT DISTINCT ujian.id_ujian,judul,tgl_buat,tgl_mulai,tgl_selesai,waktu,ujian.id_mapel_kelas,mapel.NamaMapel,
+		kelas.NamaKelas,kelas_siswa.KodeKelas,kelas_siswa.no_induk
+		FROM ujian 
+		JOIN mapel_kelas on mapel_kelas.id_mapel_kelas = ujian.id_mapel_kelas 
+		JOIN mapel on mapel.KodeMapel = mapel_kelas.KodeMapel
+		JOIN kelas on kelas.KodeKelas = mapel_kelas.KodeKelas
+		JOIN kelas_siswa on kelas_siswa.KodeKelas = kelas.KodeKelas
+		WHERE ujian.id_ujian='.$id);
+	}
+
+	public function insert($data,$table)
+    {
+        $this->db->insert($table,$data);
+        return $this->db->insert_id(); 
+    }
+
+	public function getSoalUjian($id)
+    {
+        return $this->db->query('SELECT * FROM ujian_soal JOIN soal USING(id_soal) 
+		WHERE ujian_soal.id_ujian='.$id);
+    }
+
 	public function insertSiswa()
 	{
 		$data = array(
@@ -35,6 +98,7 @@ class Siswa_model extends CI_Model
 			'JenisKelamin' => $this->input->post('JenisKelamin'),
 			'KodeKelas' => $this->input->post('KodeKelas'),
 			'id_user' => $this->input->post('id_user'),
+			'status_m' => $this->input->post('status_m'),
 			);
 
 		$this->db->insert('siswa', $data);
@@ -49,6 +113,7 @@ class Siswa_model extends CI_Model
 			'JenisKelamin' => $this->input->post('JenisKelamin'),
 			'KodeKelas' => $this->input->post('KodeKelas'),
 			'id_user' => $this->input->post('id_user'),
+			'status_m' => $this->input->post('status_m'),
 			);
 
 		$this->db->where('no_induk', $id);
@@ -62,6 +127,27 @@ class Siswa_model extends CI_Model
 		$this->db->where('siswa.no_induk', $id);
 		return $this->db->get('siswa')->result();
 	}
+
+	public function getSiswaId($id)
+	{
+		$this->db->where('id_user', $id);
+        return $this->db->get('siswa')->row();
+
+	}
+
+	public function getGuruId($id)
+	{
+		$this->db->where('id_user', $id);
+        return $this->db->get('guru')->row();
+
+	}
+
+	public function getDeadline(){
+
+		$this->db->where('id_tugas',$id);
+		return $this->db->get('tugas')->row();
+	}
+    
 
 	public function hapusSiswa($id)
 	{
@@ -79,7 +165,8 @@ class Siswa_model extends CI_Model
 		$this->db->where('KodeKelas', $id);
         $this->db->update('kelas', $data);
 	}
-    
+
+	
     public function getKelasById($id)
 	{
 		$this->db->where('KodeKelas', $id);
@@ -100,6 +187,7 @@ class Siswa_model extends CI_Model
 			'username' => $this->input->post('username'),
 			'password' => md5($this->input->post('password')),
             'level' => $this->input->post('level'),
+			'status' => $this->input->post('status'),
 			);
 
 		$this->db->where('id_user', $id);
@@ -118,6 +206,10 @@ class Siswa_model extends CI_Model
 		$this->db->delete('user');	
 	}
 
+	public function getTambah($table,$where)
+    {
+        return $this->db->get_where($table,$where);
+    }
 	
 }
 

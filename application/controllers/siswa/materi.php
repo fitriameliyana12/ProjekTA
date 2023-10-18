@@ -8,16 +8,20 @@ class Materi extends CI_Controller {
     {
 		parent::__construct();
 		$this->load->helper('url');
-		$this->load->model('Materi_model');
+        $this->load->helper('download');
+		$this->load->model('MapelKelas_model');
+		$this->load->model('Siswa_model');
 		$this->load->model('Mapel_model');
-        $this->load->model('Guru_model');
-		$this->load->model('User_model');
+        $this->load->model('Kelas_model');
+        $this->load->model('MateriSiswa_model');
+        $this->load->model('Pertemuan_model');
+        $this->load->model('PertemuanKelas_model');
 
         // //anti bypass
-        if ($this->session->userdata('level') == "1") {
+        if ($this->session->userdata('level') == "Admin") {
             redirect('/admin/overview');
-        } elseif ($this->session->userdata('level') == "2") {
-            redirect('/siswa/overviewGuru');
+        } elseif ($this->session->userdata('level') == "Guru") {
+            redirect('/guru/overviewGuru');
         } elseif (!$this->session->userdata('level')) {
             redirect('/login');
         }
@@ -25,32 +29,51 @@ class Materi extends CI_Controller {
 
     public function index()
     {
-        $data['materi'] = $this->Materi_model->getMateri()->result();
-        $data['mapel'] = $this->Mapel_model->getMapel()->result();
-        $data['guru'] = $this->Guru_model->getGuru()->result();
-        $data['user'] = $this->User_model($this->session->userdata('id_user'))->result();
-        $this->load->view('siswa/headerSiswa', $data);
-        $this->load->view('siswa/materikelas', $data);
+        $data['data']=$this->Kelas_model->getKelas();
+        $data['siswa']=$this->Siswa_model->getSiswaId($this->session->userdata('id_User'));
+        $data['mapel']=$this->MapelKelas_model->getMapel()->result();
+        $this->load->view('siswa/headerSiswa',$data);
+        $this->load->view('siswa/materiSiswa', $data);
         
     }
 
-    public function listMateri()
+    public function listPertemuan($kodeKelas, $kodeMapel)
     {
-        $data['materiList']=$this->Materi_model->getMateri()->result();
+        $siswa = $this->Siswa_model->getSiswaId($this->session->userdata('id_User'));
+        date_default_timezone_set('Asia/Jakarta');
+        $data['kelas'] = $this->Kelas_model->getKelasById($kodeKelas);
+        $data['mapel'] = $this->Mapel_model->getMapelById($kodeMapel);
+        $data['KodeKelas'] = $kodeKelas;
+        $data['KodeMapel'] = $kodeMapel;
+        $data['pertemuan'] = $this->PertemuanKelas_model->getIndex()->result();
         $this->load->view('siswa/headerSiswa', $data);
-        $this->load->view('siswa/materi_list',$data);
+        $this->load->view('siswa/listPertemuan_siswa', $data);
     }
 
-    public function detailMateri()
+    public function listMateri($kodePertemuan,$kodeKelas,$kodeMapel)
     {
-        $data['materi'] = $this->Materi_model->getMateriDetail()->result();
+        $data['KodePertemuan'] = $kodePertemuan;
+        $data['KodeKelas'] = $kodeKelas;
+        $data['KodeMapel'] = $kodeMapel;
+        $data['pertemuan'] = $this->MateriSiswa_model->getView('minggu_pertemuan',array('KodePertemuan' =>$kodePertemuan))->result();
+        $data['kelas'] = $this->MateriSiswa_model->getView('kelas',array('KodeKelas'=>$kodeKelas))->result();
+        $data['mapel']=$this->MateriSiswa_model->getView('mapel',array('KodeMapel'=>$kodeMapel))->result();
+        $data['materi']=$this->MateriSiswa_model->getMateriKelas($kodePertemuan,$kodeKelas,$kodeMapel)->result();
+        $this->load->view('siswa/headerSiswa');
+        $this->load->view('siswa/listmateri',$data);
+    }
+
+    public function detailMateri($idmateri)
+    {
+        $data['materi'] = $this->Siswa_model->getTambah('materi', array('id_materi'=>$idmateri))->result();
+        
         $this->load->view('siswa/headerSiswa', $data);
         $this->load->view('siswa/detailmateri',$data);
     }
 
-    public function download($nama)
+    public function downloadMateri($nama)
     {
-        $pth = file_get_contents(base_url()."assets/tugas/".$nama);
+        $pth = file_get_contents(base_url()."assets/materi/".$nama);
         force_download($nama, $pth);
     }
 

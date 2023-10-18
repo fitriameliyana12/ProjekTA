@@ -10,14 +10,14 @@ class OverviewGuru extends CI_Controller {
         $this->load->model('Siswa_model');
 
 		// //anti bypass
-        if ($this->session->userdata('level') == "1") {
-            redirect('/admin/overview');
-        } elseif ($this->session->userdata('level') == "3") {
-            redirect('/siswa/overviewsiswa');
-        } elseif (!$this->session->userdata('level')) {
-            redirect('/login');
-        }
-	}
+		if ($this->session->userdata('level') == "Admin") {
+			redirect('/admin/overview');
+		  } elseif ($this->session->userdata('level') == "Siswa") {
+			redirect('/siswa/overviewsiswa');
+		  } elseif (!$this->session->userdata('level')) {
+			redirect('/login');
+		  }
+		}
 
 	public function index()
 	{

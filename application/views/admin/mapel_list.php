@@ -10,11 +10,12 @@
           </li>
           <li class="breadcrumb-item active">Mata Pelajaran</li>
         </ol>
-        <?php if ($this->session->userdata('level') == '1'){ ?>
+        <?php if ($this->session->userdata('level') == 'Admin'){ ?>
         <div align="left">
           <a href="<?php echo base_url('index.php/admin/mapel/tambah/'); ?>" class="btn btn-success">Tambah</a>
         </div>
         <br>
+        <center><h3><strong>Daftar Mata Pelajaran</strong></h3></center>
       <?php } ?>
 
             <br>
@@ -23,7 +24,7 @@
                 <th>No</th>
                 <th>Kode Mapel</th>
                 <th>Mata Pelajaran</th>
-                <?php if ($this->session->userdata('level') == '1') { ?>
+                <?php if ($this->session->userdata('level') == 'Admin') { ?>
                 <th>Action</th>
               <?php } ?>
               </thead>
@@ -34,7 +35,7 @@
                   <td><?php echo $key->KodeMapel; ?></td>
                   <td><?php echo $key->NamaMapel; ?></td>
     
-                      <?php if ($this->session->userdata('level') == '1') { ?>
+                      <?php if ($this->session->userdata('level') == 'Admin') { ?>
                     <td>
                       <a href="<?php echo base_url('index.php/admin/mapel/edit/');echo $key->KodeMapel; ?>" class="btn btn-warning">Edit</a> <a onclick="return confirm('Apakah yakin ingin hapus?')" href="<?php echo base_url('index.php/admin/mapel/hapus/');echo $key->KodeMapel; ?>" class="btn btn-danger">Hapus</a>
                     </td>
